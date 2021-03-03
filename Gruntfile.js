@@ -10,10 +10,14 @@ module.exports = function (grunt) {
         presets: ["@babel/preset-env"],
       },
       dist: {
-        files: {
-          "dist/main.js": "src/main.js",
-          "dist/robert.js": "src/robert.js",
-        }
+        files: [
+          {
+            expand: true,
+            cwd: 'src/',
+            src: ['*.js'],
+            dest: 'dist/'
+          }
+        ],
       }
     },
     screeps: {

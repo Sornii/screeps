@@ -4,7 +4,9 @@
   "description": "",
   "main": "dist/index.js",
   "scripts": {
-    "deploy": "grunt"
+    "start": "grunt",
+    "compile": "grunt babel",
+    "deploy": "grunt screeps"
   },
   "repository": {
     "type": "git",
