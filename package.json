@@ -1,0 +1,22 @@
+{
+  "name": "screeps",
+  "version": "1.0.0",
+  "description": "",
+  "main": "dist/index.js",
+  "scripts": {
+    "deploy": "grunt screeps"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Sornii/screeps.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Sornii/screeps/issues"
+  },
+  "homepage": "https://github.com/Sornii/screeps#readme",
+  "dependencies": {
+    "grunt-screeps": "^1.5.0"
+  }
+}
