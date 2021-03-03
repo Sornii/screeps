@@ -21,6 +21,7 @@ jobs:
       - checkout
       - node/install-packages:
           pkg-manager: yarn
+      - run: echo $SCREEPS_EMAIL
       - run:
           command: yarn run deploy
           name: Run deployment to screeps
