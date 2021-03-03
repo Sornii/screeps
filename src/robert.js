@@ -1,10 +1,10 @@
 const name = 'Robert';
 
 export const goRobert = (spawn) => {
-  const robert = Game.creeps['Robert'];
+  const robert = Game.creeps[name];
 
   if (!robert) {
-    spawn.spawnCreep([WORK, MOVE, CARRY], 'Robert');
+    spawn.spawnCreep([WORK, MOVE, CARRY], name);
     return;
   }
 
