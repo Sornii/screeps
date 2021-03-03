@@ -16,7 +16,8 @@
     "url": "https://github.com/Sornii/screeps/issues"
   },
   "homepage": "https://github.com/Sornii/screeps#readme",
-  "dependencies": {
+  "devDependencies": {
+    "grunt": "^1.3.0",
     "grunt-screeps": "^1.5.0"
   }
 }
