@@ -2,10 +2,17 @@ version: 2.1
 orbs:
   node: circleci/node@4.2.0
 jobs:
+  install:
+    docker:
+      - image: 'cimg/base:stable'
+    steps:
+      - checkout
+      - node/install:
+          install-yarn: true
+      - run: node --version
   deploy:
     executor:
       name: node/default
-      tag: '13'
     steps:
       - checkout
       - node/install-packages:
@@ -17,4 +24,5 @@ jobs:
 workflows:
   deployment:
     jobs:
+      - install
       - deploy
