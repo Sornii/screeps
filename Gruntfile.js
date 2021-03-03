@@ -1,8 +1,20 @@
 module.exports = function (grunt) {
 
   grunt.loadNpmTasks('grunt-screeps');
+  grunt.loadNpmTasks('grunt-babel');
 
   grunt.initConfig({
+    babel: {
+      options: {
+        sourceMap: true,
+        presets: ["@babel/preset-env"],
+      },
+      dist: {
+        files: {
+          "dist/main.js": "src/main.js"
+        }
+      }
+    },
     screeps: {
       options: {
         email: process.env.SCREEPS_EMAIL,
@@ -15,4 +27,6 @@ module.exports = function (grunt) {
       }
     }
   });
+
+  grunt.registerTask('default', ['babel', 'screeps']);
 };
