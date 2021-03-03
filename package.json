@@ -4,7 +4,8 @@
   "description": "",
   "main": "dist/index.js",
   "scripts": {
-    "deploy": "grunt"
+    "deploy": "grunt",
+    "printvars": "node printvars.js"
   },
   "repository": {
     "type": "git",
