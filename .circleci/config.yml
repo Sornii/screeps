@@ -18,9 +18,6 @@ jobs:
       - node/install-packages:
           pkg-manager: yarn
       - run:
-          command: yarn printvars
-          name: Printing environment variables
-      - run:
           command: yarn deploy
           name: Run deployment to screeps
 
