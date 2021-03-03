@@ -13,6 +13,10 @@ jobs:
   deploy:
     executor:
       name: node/default
+    environment:
+      SCREEPS_EMAIL: $SCREEPS_EMAIL
+      SCREEPS_TOKEN: $SCREEPS_TOKEN
+      SCREEPS_BRANCH: $SCREEPS_BRANCH
     steps:
       - checkout
       - node/install-packages:
