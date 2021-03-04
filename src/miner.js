@@ -1,17 +1,40 @@
+import { roll } from "./dice";
+
 const name = 'Miner';
 
+/**
+ * Give birth to a miner and put it to work
+ * @param {StructureSpawn} spawn
+ */
 export const miner = (spawn) => {
-  const robert = Game.creeps[name];
+  const miner = Game.creeps[name];
 
-  if (!robert) {
+  if (!miner) {
     spawn.spawnCreep([WORK, MOVE, CARRY], name);
     return;
   }
 
-  const target = robert.room.find(FIND_SOURCES_ACTIVE);
-  if (target) {
-    if (robert.harvest(target[0]) === ERR_NOT_IN_RANGE) {
-      robert.moveTo(target[0]);
+  /**
+   * Mining location
+   * @type {Source}
+   */
+  let mine = Game.getObjectById(miner.memory.mine);
+
+  if (!mine) {
+    const activeSources = spawn.room.find(FIND_SOURCES_ACTIVE);
+    mine = activeSources[roll(activeSources.length)];
+    miner.memory.mine = mine.id;
+  }
+
+  if (!miner.store.getFreeCapacity()) {
+    if (miner.transfer(spawn, RESOURCE_ENERGY) === ERR_NOT_IN_RANGE) {
+      miner.moveTo(spawn);
+    }
+  }
+
+  if (mine) {
+    if (miner.harvest(mine) === ERR_NOT_IN_RANGE) {
+      miner.moveTo(mine);
     }
   }
 };
