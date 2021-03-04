@@ -15,7 +15,7 @@ export const runBuilder = (spawn, constructionSites, surname= '') => {
   const builder = Game.creeps[fullName];
 
   if (!builder) {
-    spawn.spawnCreep([WORK, MOVE, CARRY], fullName, {
+    spawn.spawnCreep([WORK, WORK, MOVE, CARRY], fullName, {
       memory: {
         profession: 'builder',
       },

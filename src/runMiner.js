@@ -21,7 +21,7 @@ export const runMiner = (spawn, surname = '') => {
   const miner = Game.creeps[fullName];
 
   if (!miner) {
-    spawn.spawnCreep([WORK, MOVE, CARRY], fullName, {
+    spawn.spawnCreep([WORK, WORK, MOVE, CARRY], fullName, {
       memory: {
         profession: 'miner',
       },
@@ -37,10 +37,6 @@ export const runMiner = (spawn, surname = '') => {
     return;
   }
 
-  /**
-   * Mining location
-   * @type {Source}
-   */
   let mine = Game.getObjectById(miner.memory.mine);
 
   if (!mine) {
