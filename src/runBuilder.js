@@ -1,5 +1,9 @@
 const name = 'Builder';
 
+const STATES = {
+  IDLE: 'idle',
+};
+
 /**
  * @param {StructureSpawn} spawn
  * @param {Array<ConstructionSite>} constructionSites
@@ -13,6 +17,10 @@ export const runBuilder = (spawn, constructionSites) => {
   }
 
   if (builder.spawning) {
+    return;
+  }
+
+  if (builder.memory.state === STATES.IDLE) {
     return;
   }
 

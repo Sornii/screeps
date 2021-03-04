@@ -7,6 +7,7 @@ const STATES = {
   MOVING_TO_STORE: 'movingToStore',
   STORING: 'storing',
   MINING: 'mining',
+  IDLE: 'idle',
 };
 
 /**
@@ -25,6 +26,10 @@ export const runMiner = (spawn, surname = '') => {
   }
 
   if (miner.spawning) {
+    return;
+  }
+
+  if (miner.memory.state === STATES.IDLE) {
     return;
   }
 
