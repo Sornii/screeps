@@ -16,4 +16,5 @@ export const loop = () => {
 
   const constructionSites = spawn1.room.find(FIND_CONSTRUCTION_SITES);
   runBuilder(spawn1, constructionSites);
+  runBuilder(spawn1, constructionSites, 'II');
 };

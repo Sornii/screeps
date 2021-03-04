@@ -7,12 +7,19 @@ const STATES = {
 /**
  * @param {StructureSpawn} spawn
  * @param {Array<ConstructionSite>} constructionSites
+ * @param {string} surname
  */
-export const runBuilder = (spawn, constructionSites) => {
-  const builder = Game.creeps[name];
+export const runBuilder = (spawn, constructionSites, surname= '') => {
+  const fullName = surname ? `${name} ${surname}` : name;
+
+  const builder = Game.creeps[fullName];
 
   if (!builder) {
-    spawn.spawnCreep([WORK, MOVE, CARRY], name);
+    spawn.spawnCreep([WORK, MOVE, CARRY], fullName, {
+      memory: {
+        profession: 'builder',
+      },
+    });
     return;
   }
 

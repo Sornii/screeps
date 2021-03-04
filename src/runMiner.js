@@ -21,7 +21,11 @@ export const runMiner = (spawn, surname = '') => {
   const miner = Game.creeps[fullName];
 
   if (!miner) {
-    spawn.spawnCreep([WORK, MOVE, CARRY], fullName);
+    spawn.spawnCreep([WORK, MOVE, CARRY], fullName, {
+      memory: {
+        profession: 'miner',
+      },
+    });
     return;
   }
 
