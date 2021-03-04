@@ -44,9 +44,13 @@ export const runBuilder = (spawn, constructionSites, surname= '') => {
   let constructionSite = constructionSites[0];
 
   if (constructionSite) {
-    let returnCode = builder.build(constructionSite);
-    if (returnCode === ERR_NOT_IN_RANGE) {
+    if (builder.build(constructionSite) === ERR_NOT_IN_RANGE) {
       builder.moveTo(constructionSite);
     }
+    return;
+  }
+
+  if (builder.upgradeController(builder.room.controller) === ERR_NOT_IN_RANGE) {
+    builder.moveTo(builder.room.controller);
   }
 };
