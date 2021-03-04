@@ -25,6 +25,9 @@ export const runBuilder = (spawn, constructionSites) => {
   }
 
   if (builder.store.getUsedCapacity() === 0) {
+    if (spawn.store.energy < 200) {
+      return;
+    }
     if (builder.withdraw(spawn, RESOURCE_ENERGY) === ERR_NOT_IN_RANGE) {
       builder.moveTo(spawn);
     }
