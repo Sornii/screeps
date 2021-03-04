@@ -1,6 +1,6 @@
-const name = 'Robert';
+const name = 'Miner';
 
-export const goRobert = (spawn) => {
+export const miner = (spawn) => {
   const robert = Game.creeps[name];
 
   if (!robert) {
