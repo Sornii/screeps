@@ -10,6 +10,9 @@ export const loop = () => {
   );
   let spawn1 = Game.spawns[spawn];
   runMiner(spawn1);
+  runMiner(spawn1, 'II');
+  runMiner(spawn1, 'III');
+  runMiner(spawn1, 'IV');
 
   const constructionSites = spawn1.room.find(FIND_CONSTRUCTION_SITES);
   runBuilder(spawn1, constructionSites);

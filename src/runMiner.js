@@ -12,12 +12,15 @@ const STATES = {
 /**
  * Give birth to a miner and put it to work
  * @param {StructureSpawn} spawn
+ * @param {string} surname
  */
-export const runMiner = (spawn) => {
-  const miner = Game.creeps[name];
+export const runMiner = (spawn, surname = '') => {
+  const fullName = surname ? `${name} ${surname}` : name;
+
+  const miner = Game.creeps[fullName];
 
   if (!miner) {
-    spawn.spawnCreep([WORK, MOVE, CARRY], name);
+    spawn.spawnCreep([WORK, MOVE, CARRY], fullName);
     return;
   }
 
