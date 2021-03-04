@@ -13,6 +13,8 @@ export const loop = () => {
   runMiner(spawn1, 'II');
   runMiner(spawn1, 'III');
   runMiner(spawn1, 'IV');
+  runMiner(spawn1, 'V');
+  runMiner(spawn1, 'VI');
 
   const constructionSites = spawn1.room.find(FIND_CONSTRUCTION_SITES);
   runBuilder(spawn1, constructionSites);
