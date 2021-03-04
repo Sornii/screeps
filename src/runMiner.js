@@ -13,7 +13,7 @@ const STATES = {
  * Give birth to a miner and put it to work
  * @param {StructureSpawn} spawn
  */
-export const miner = (spawn) => {
+export const runMiner = (spawn) => {
   const miner = Game.creeps[name];
 
   if (!miner) {
