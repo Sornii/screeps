@@ -22,7 +22,7 @@ export const loop = () => {
 
   const countByProfession = countBy(creeps, 'memory.profession');
 
-  console.log(JSON.stringify(`Current population ${countByProfession}`));
+  console.log(`Current population ${JSON.stringify(countByProfession)}`);
 
   // Seed population
   each(worldState.professionPopulation, (population, profession) => {
