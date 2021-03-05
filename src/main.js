@@ -3,7 +3,7 @@ import { filter, each, countBy } from 'lodash';
 import { dies } from './dies';
 import { action } from './actions';
 
-const roomName = 'E48N13';
+const roomName = 'E38N53';
 const spawnName = 'Spawn1';
 
 // noinspection JSUnusedGlobalSymbols
