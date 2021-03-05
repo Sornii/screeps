@@ -22,6 +22,8 @@ export const loop = () => {
 
   const countByProfession = countBy(creeps, 'memory.profession');
 
+  JSON.stringify(`Current population ${countByProfession}`);
+
   // Seed population
   each(worldState.professionPopulation, (population, profession) => {
     if (countByProfession[profession] < population) {
