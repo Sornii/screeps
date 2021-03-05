@@ -1,7 +1,7 @@
 import { createCreep } from './professions';
-import { each, countBy } from 'lodash';
-import { dies } from "./dies";
-import { action } from "./actions";
+import { filter, each, countBy } from 'lodash';
+import { dies } from './dies';
+import { action } from './actions';
 
 const roomName = 'E48N13';
 const spawnName = 'Spawn1';
@@ -28,7 +28,9 @@ export const loop = () => {
     const currentPopulation = countByProfession[profession];
     if (currentPopulation == null || currentPopulation < maxPopulation) {
       const [configuration, result] = createCreep(profession, spawn);
-      console.log(`Created ${profession} with configuration ${configuration}. The result is ${result}`);
+      console.log(
+        `Created ${profession} with configuration ${configuration}. The result is ${result}`
+      );
     }
   });
 
@@ -36,11 +38,19 @@ export const loop = () => {
     if (creep.ticksToLive === 0) {
       dies(creep, worldState);
     }
-  })
+  });
 
   each(creeps, (creep) => {
     if (creep.ticksToLive !== 0) {
       action(creep, worldState);
     }
-  })
+  });
+
+  const deadCreeps = filter(Memory.creeps, (creepsInMemory, name) => {
+    if (!Game.creeps[name]) {
+      return name;
+    }
+  });
+
+  each(deadCreeps, (name) => delete Memory.creeps[name]);
 };
