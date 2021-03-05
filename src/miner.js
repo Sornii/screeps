@@ -9,7 +9,7 @@ const STATES = {
 };
 
 export const initiateSourceMining = (source) => {
-  if (!Memory.sourceMining[source.id]) {
+  if (!Memory.sourceMining[source.id].maxOccupation) {
     Memory.sourceMining[source.id] = {
       isBusy: false,
       miners: [],
