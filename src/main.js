@@ -1,4 +1,3 @@
-import { runMiner } from './runMiner';
 import { createCreep } from './professions';
 import { each, countBy } from 'lodash';
 import { dies } from "./dies";
