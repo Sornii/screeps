@@ -34,7 +34,13 @@ export const minerAction = (creep, worldState) => {
 
   const spawn = worldState.mainSpawn;
 
+  if (!worldState.sourceMining) {
+    console.error(new Error("Source mining not configured"));
+    return;
+  }
+
   if (!source) {
+
     const source = filter(
       worldState.sourceMining,
       (sourceMining) => !sourceMining.isBusy
