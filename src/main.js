@@ -41,9 +41,4 @@ export const loop = () => {
       action(creep, worldState);
     }
   })
-
-  runMiner(spawn, 'V');
-  runMiner(spawn, 'VIII');
-  runMiner(spawn, 'IX');
-  runMiner(spawn, 'X');
 };
