@@ -1,4 +1,4 @@
-import { filter } from "lodash";
+import { first, filter } from "lodash";
 
 const STATES = {
   MOVING_TO_MINE: 'movingToMine',
@@ -40,11 +40,11 @@ export const minerAction = (creep, worldState) => {
   }
 
   if (!source) {
-
-    const source = filter(
+    const sourceId = first(filter(
       worldState.sourceMining,
       (sourceMining) => !sourceMining.isBusy
-    );
+    ));
+    source = Game.getObjectById(sourceId);
     initiateSourceMining(source);
     pushMiner(source, creep);
     checkIsBusy(source);
