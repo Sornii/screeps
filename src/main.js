@@ -20,7 +20,7 @@ export const loop = () => {
     mainSpawn: spawn,
   };
 
-  const countByProfession = countBy(creeps, 'profession');
+  const countByProfession = countBy(creeps, 'memory.profession');
 
   // Seed population
   each(worldState.professionPopulation, (population, profession) => {
@@ -30,13 +30,13 @@ export const loop = () => {
     }
   });
 
-  each(creeps, (creep, name) => {
+  each(creeps, (creep) => {
     if (creep.ticksToLive === 0) {
       dies(creep, worldState);
     }
   })
 
-  each(creeps, (creep, name) => {
+  each(creeps, (creep) => {
     if (creep.ticksToLive !== 0) {
       action(creep, worldState);
     }
