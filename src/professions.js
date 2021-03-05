@@ -78,10 +78,16 @@ export const createBuilder = (spawn) => {
   return [configuration, spawn.spawnCreep(...configuration)];
 };
 
-const CREATORS = {
-  miner: createMiner,
-  mule: createMule,
-  builder: createBuilder,
+export const PROFESSIONS = {
+  MINER: 'miner',
+  MULE: 'mule',
+  BUILDER: 'builder',
+};
+
+export const CREATORS = {
+  [PROFESSIONS.MINER]: createMiner,
+  [PROFESSIONS.MULE]: createMule,
+  [PROFESSIONS.BUILDER]: createBuilder,
 };
 
 export const createCreep = (profession, ...args) => {

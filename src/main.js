@@ -1,7 +1,8 @@
 import { runMiner } from './runMiner';
-import { runBuilder } from './runBuilder';
 import { createCreep } from './professions';
 import { each, countBy } from 'lodash';
+import { dies } from "./dies";
+import { action } from "./actions";
 
 const roomName = 'E48N13';
 const spawnName = 'Spawn1';
@@ -15,16 +16,31 @@ export const loop = () => {
   const worldState = {
     roomConstructionSites: spawn.room.find(FIND_CONSTRUCTION_SITES),
     professionPopulation: Memory.professionPopulation,
+    sourceMining: Memory.sourceMining,
+    mainSpawn: spawn,
   };
 
   const countByProfession = countBy(creeps, 'profession');
 
+  // Seed population
   each(worldState.professionPopulation, (population, profession) => {
     if (countByProfession[profession] < population) {
       const [configuration, result] = createCreep(profession);
       console.log(`Created ${profession} with configuration ${configuration}. The result is ${result}`);
     }
   });
+
+  each(creeps, (creep, name) => {
+    if (creep.ticksToLive === 0) {
+      dies(creep, worldState);
+    }
+  })
+
+  each(creeps, (creep, name) => {
+    if (creep.ticksToLive !== 0) {
+      action(creep, worldState);
+    }
+  })
 
   runMiner(spawn, 'V');
   runMiner(spawn, 'VIII');
