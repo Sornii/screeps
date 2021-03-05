@@ -8,50 +8,40 @@ const STATES = {
   IDLE: 'idle',
 };
 
-export const initiateSourceMining = (source) => {
-  if (!Memory.sourceMining[source.id].maxOccupation) {
-    Memory.sourceMining[source.id] = {
-      isBusy: false,
-      miners: [],
-      maxOccupation: 1,
-    };
-  }
-};
-
-export const checkIsBusy = (source) => {
-  const memory = Memory.sourceMining[source.id];
-  if (memory.miners.length >= memory.maxOccupation) {
-    memory.isBusy = true;
-  }
-};
-
-export const pushMiner = (source, creep) => {
-  Memory.sourceMining[source.id].miners.push(creep.id);
-};
-
 export const minerAction = (creep, worldState) => {
   let source = Game.getObjectById(creep.memory.sourceId);
 
   const spawn = worldState.mainSpawn;
 
-  if (!worldState.sourceMining) {
+  const { sourceMining } = worldState;
+
+  if (!sourceMining) {
     console.log(new Error('Source mining not configured'));
     return;
   }
 
   if (!source) {
     const sourceId = findKey(
-      worldState.sourceMining,
-      (sourceMining, key) => !sourceMining.isBusy && key !== 'undefined'
+      sourceMining,
+      (src, key) => !src.isBusy && key !== 'undefined'
     );
     if (!sourceId) {
       return;
     }
+    let config = sourceMining[sourceId];
+    if (!config.maxOccupation && !config.miners && config.isBusy == null) {
+      sourceMining[sourceId] = {
+        isBusy: false,
+        miners: [],
+        maxOccupation: 1,
+      };
+      config = sourceMining[sourceId];
+    }
+    config.miners.push(creep.id);
+    config.isBusy = config.miners.length >= config.maxOccupation;
+    creep.memory.sourceId = sourceId;
+
     source = Game.getObjectById(sourceId);
-    initiateSourceMining(source);
-    pushMiner(source, creep);
-    checkIsBusy(source);
-    creep.memory.sourceId = source.id;
   }
 
   if (!creep.memory.state) {

@@ -34,7 +34,7 @@ export const mule = () => {
   const timestamp = Date.now();
 
   return [
-    [CARRY, CARRY, MOVE, MOVE],
+    [CARRY, CARRY, CARRY, MOVE, MOVE, MOVE],
     `Mule_${timestamp}`,
     {
       memory: {
