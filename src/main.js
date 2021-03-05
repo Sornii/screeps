@@ -1,3 +1,5 @@
+import { runMiner } from './runMiner';
+import { runBuilder } from './runBuilder';
 import { createCreep } from './professions';
 import { each, countBy } from 'lodash';
 
@@ -23,4 +25,9 @@ export const loop = () => {
       console.log(`Created ${profession} with configuration ${configuration}. The result is ${result}`);
     }
   });
+
+  runMiner(spawn, 'V');
+  runMiner(spawn, 'VIII');
+  runMiner(spawn, 'IX');
+  runMiner(spawn, 'X');
 };
