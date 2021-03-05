@@ -25,8 +25,9 @@ export const loop = () => {
   console.log(`Current population ${JSON.stringify(countByProfession)}`);
 
   // Seed population
-  each(worldState.professionPopulation, (population, profession) => {
-    if (countByProfession[profession] < population) {
+  each(worldState.professionPopulation, (maxPopulation, profession) => {
+    const currentPopulation = countByProfession[profession];
+    if (currentPopulation == null || currentPopulation < maxPopulation) {
       const [configuration, result] = createCreep(profession);
       console.log(`Created ${profession} with configuration ${configuration}. The result is ${result}`);
     }
