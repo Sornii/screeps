@@ -3,7 +3,7 @@
  * @returns {["work", "work", "work", "move"]}
  */
 const worker = () => {
-  return [WORK, WORK, WORK, MOVE];
+  return [WORK, WORK, CARRY, MOVE];
 };
 
 export const miner = () => {
