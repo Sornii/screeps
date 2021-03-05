@@ -11,7 +11,7 @@ export const ACTIONS = {
 };
 
 export const action = (creep, worldState) => {
-  if (!Object.keys(PROFESSIONS).includes(creep.memory.profession)) {
+  if (!Object.values(PROFESSIONS).includes(creep.memory.profession)) {
     console.log(`Profession ${creep.memory.profession} not found for ${creep.name}`);
     return;
   }
