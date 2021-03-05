@@ -46,11 +46,9 @@ export const loop = () => {
     }
   });
 
-  const deadCreeps = filter(Memory.creeps, (creepsInMemory, name) => {
-    if (!Game.creeps[name]) {
-      return name;
+  for(const i in Memory.creeps) {
+    if(!Game.creeps[i]) {
+      delete Memory.creeps[i];
     }
-  });
-
-  each(deadCreeps, (name) => delete Memory.creeps[name]);
+  }
 };
