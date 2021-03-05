@@ -1,68 +1,26 @@
-import { runMiner } from './runMiner';
-import { runBuilder } from './runBuilder';
+import { createCreep } from './professions';
+import { each, countBy } from 'lodash';
 
-const room = 'E48N13';
-const spawn = 'Spawn1';
+const roomName = 'E48N13';
+const spawnName = 'Spawn1';
 
 // noinspection JSUnusedGlobalSymbols
 export const loop = () => {
-  console.log(
-    `Running, there's ${Game.cpu.tickLimit} of CPU to spend on this tick.`
-  );
-  let spawn1 = Game.spawns[spawn];
+  const spawn = Game.spawns[spawnName];
+  const room = Game.rooms[roomName];
+  const creeps = Game.creeps;
 
-  const path = Game.rooms[room].findPath(
-    spawn1.pos,
-    Game.getObjectById('5bbcafe09099fc012e63b51e').pos
-  );
-  const path2 = Game.rooms[room].findPath(
-    spawn1.pos,
-    Game.getObjectById('5bbcafe09099fc012e63b51f').pos
-  );
-  const path3 = Game.rooms[room].findPath(
-    spawn1.pos,
-    new RoomPosition(17, 22, room)
-  );
-  const path4 = Game.rooms[room].findPath(
-    spawn1.pos,
-    new RoomPosition(21, 23, room)
-  );
-  Game.rooms[room].visual.poly(path, {
-    stroke: '#fff',
-    strokeWidth: 0.15,
-    opacity: 0.2,
-    lineStyle: 'dashed',
-  });
-  Game.rooms[room].visual.poly(path2, {
-    stroke: '#fff',
-    strokeWidth: 0.15,
-    opacity: 0.2,
-    lineStyle: 'dashed',
-  });
-  Game.rooms[room].visual.poly(path3, {
-    stroke: '#fff',
-    strokeWidth: 0.15,
-    opacity: 0.2,
-    lineStyle: 'dashed',
-  });
-  Game.rooms[room].visual.poly(path4, {
-    stroke: '#fff',
-    strokeWidth: 0.15,
-    opacity: 0.2,
-    lineStyle: 'dashed',
-  });
+  const worldState = {
+    roomConstructionSites: spawn.room.find(FIND_CONSTRUCTION_SITES),
+    professionPopulation: Memory.creepsControl,
+  };
 
-  const constructionSites = spawn1.room.find(FIND_CONSTRUCTION_SITES);
-  runBuilder(spawn1, constructionSites);
-  runBuilder(spawn1, constructionSites, 'III');
-  runBuilder(spawn1, constructionSites, 'V');
+  const countByProfession = countBy(creeps, 'profession');
 
-  runMiner(spawn1);
-  runMiner(spawn1, 'II');
-  runMiner(spawn1, 'V');
-  runMiner(spawn1, 'VII');
-  runMiner(spawn1, 'VIII');
-  runMiner(spawn1, 'IX');
-  runMiner(spawn1, 'X');
-  runMiner(spawn1, 'XI');
+  each(worldState.professionPopulation, (population, profession) => {
+    if (countByProfession[profession] < population) {
+      const [configuration, result] = createCreep(profession);
+      console.log(`Created ${profession} with configuration ${configuration}. The result is ${result}`);
+    }
+  });
 };
