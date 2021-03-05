@@ -14,7 +14,7 @@ export const loop = () => {
 
   const worldState = {
     roomConstructionSites: spawn.room.find(FIND_CONSTRUCTION_SITES),
-    professionPopulation: Memory.creepsControl,
+    professionPopulation: Memory.professionPopulation,
   };
 
   const countByProfession = countBy(creeps, 'profession');
