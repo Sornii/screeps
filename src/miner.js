@@ -1,4 +1,4 @@
-import { first, filter } from "lodash";
+import { findKey } from 'lodash';
 
 const STATES = {
   MOVING_TO_MINE: 'movingToMine',
@@ -35,15 +35,15 @@ export const minerAction = (creep, worldState) => {
   const spawn = worldState.mainSpawn;
 
   if (!worldState.sourceMining) {
-    console.log(new Error("Source mining not configured"));
+    console.log(new Error('Source mining not configured'));
     return;
   }
 
   if (!source) {
-    const sourceId = first(filter(
+    const sourceId = findKey(
       worldState.sourceMining,
       (sourceMining) => !sourceMining.isBusy
-    ));
+    );
     source = Game.getObjectById(sourceId);
     initiateSourceMining(source);
     pushMiner(source, creep);
