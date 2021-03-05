@@ -44,9 +44,10 @@ export const minerAction = (creep, worldState) => {
       worldState.sourceMining,
       (sourceMining, key) => !sourceMining.isBusy && key !== 'undefined'
     );
+    if (!sourceId) {
+      return;
+    }
     source = Game.getObjectById(sourceId);
-    console.log(JSON.stringify(source));
-    console.log(source.toString());
     initiateSourceMining(source);
     pushMiner(source, creep);
     checkIsBusy(source);
