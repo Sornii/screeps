@@ -28,7 +28,7 @@ export const loop = () => {
   each(worldState.professionPopulation, (maxPopulation, profession) => {
     const currentPopulation = countByProfession[profession];
     if (currentPopulation == null || currentPopulation < maxPopulation) {
-      const [configuration, result] = createCreep(profession);
+      const [configuration, result] = createCreep(profession, spawn);
       console.log(`Created ${profession} with configuration ${configuration}. The result is ${result}`);
     }
   });
