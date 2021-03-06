@@ -1,5 +1,6 @@
-import { createCreep } from './professions';
-import { filter, each, countBy } from 'lodash';
+import { each } from 'lodash';
+
+import { population } from './population';
 import { dies } from './dies';
 import { action } from './actions';
 
@@ -16,26 +17,16 @@ export const loop = () => {
     roomConstructionSites: spawn.room.find(FIND_CONSTRUCTION_SITES),
     professionPopulation: Memory.professionPopulation,
     sourceMining: Memory.sourceMining,
+    muleOrders: Memory.muleOrders,
+    creeps: Game.creeps,
     mainSpawn: spawn,
+    mainRoom: room,
   };
 
-  const countByProfession = countBy(creeps, 'memory.profession');
-
-  console.log(`Current population ${JSON.stringify(countByProfession)}`);
-
-  // Seed population
-  each(worldState.professionPopulation, (maxPopulation, profession) => {
-    const currentPopulation = countByProfession[profession];
-    if (currentPopulation == null || currentPopulation < maxPopulation) {
-      const [configuration, result] = createCreep(profession, spawn);
-      console.log(
-        `Created ${profession} with configuration ${configuration}. The result is ${result}`
-      );
-    }
-  });
+  population(worldState);
 
   each(creeps, (creep) => {
-    if (creep.ticksToLive === 0) {
+    if (creep.ticksToLive === 1) {
       dies(creep, worldState);
     }
   });
@@ -46,8 +37,8 @@ export const loop = () => {
     }
   });
 
-  for(const i in Memory.creeps) {
-    if(!Game.creeps[i]) {
+  for (const i in Memory.creeps) {
+    if (!Game.creeps[i]) {
       delete Memory.creeps[i];
     }
   }

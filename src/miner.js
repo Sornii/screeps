@@ -1,24 +1,27 @@
-import { findKey } from 'lodash';
+import { findKey, remove } from 'lodash';
 
-const STATES = {
+export const STATES = {
   MOVING_TO_MINE: 'movingToMine',
   MOVING_TO_STORE: 'movingToStore',
+  WAITING_MULE: 'waitingMule',
   STORING: 'storing',
+  TRANSFERRING: 'transferring',
   MINING: 'mining',
-  IDLE: 'idle',
+  IDLING: 'idling',
 };
 
 export const minerAction = (creep, worldState) => {
-  let source = Game.getObjectById(creep.memory.sourceId);
-
-  const spawn = worldState.mainSpawn;
-
-  const { sourceMining } = worldState;
+  const { creeps, sourceMining } = worldState;
 
   if (!sourceMining) {
     console.log(new Error('Source mining not configured'));
     return;
   }
+
+  let source = Game.getObjectById(creep.memory.sourceId);
+
+  const spawn = worldState.mainSpawn;
+  const mule = creeps[creep.memory.mule];
 
   if (!source) {
     const sourceId = findKey(
@@ -37,7 +40,7 @@ export const minerAction = (creep, worldState) => {
       };
       config = sourceMining[sourceId];
     }
-    config.miners.push(creep.id);
+    config.miners.push(creep.name);
     config.isBusy = config.miners.length >= config.maxOccupation;
     creep.memory.sourceId = sourceId;
 
@@ -66,6 +69,8 @@ export const minerAction = (creep, worldState) => {
       if (creep.store.getFreeCapacity() === 0) {
         if (creep.pos.isNearTo(spawn.pos)) {
           creep.memory.state = STATES.STORING;
+        } else if (mule) {
+          creep.memory.state = STATES.WAITING_MULE;
         } else {
           creep.memory.state = STATES.MOVING_TO_STORE;
         }
@@ -93,6 +98,16 @@ export const minerAction = (creep, worldState) => {
           creep.memory.state = STATES.MOVING_TO_MINE;
         }
       }
+      break;
+    case STATES.WAITING_MULE:
+      if (creep.pos.isNearTo(mule)) {
+        creep.memory.state = STATES.TRANSFERRING;
+      }
+      break;
+    case STATES.TRANSFERRING:
+      if (creep.store.getUsedCapacity() === 0) {
+        creep.memory.state = STATES.MINING;
+      }
   }
 
   // State-action
@@ -108,5 +123,25 @@ export const minerAction = (creep, worldState) => {
       break;
     case STATES.STORING:
       creep.transfer(spawn, RESOURCE_ENERGY);
+      break;
+    case STATES.TRANSFERRING:
+      creep.transfer(mule, RESOURCE_ENERGY);
   }
+};
+
+export const minerDeath = (creep, worldState) => {
+  const { sourceMining } = worldState;
+
+  const sourceId = creep.memory.sourceId;
+  let config = sourceMining[sourceId];
+  if (!config.maxOccupation && !config.miners && config.isBusy == null) {
+    sourceMining[sourceId] = {
+      isBusy: false,
+      miners: [],
+      maxOccupation: 1,
+    };
+  } else {
+    remove(config.miners, (name) => creep.name === name);
+  }
+  config.isBusy = config.miners.length >= config.maxOccupation;
 };
