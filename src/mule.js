@@ -1,5 +1,4 @@
 import { first, findKey } from 'lodash';
-import { STATES as MINER_STATES } from "./miner";
 
 export const STATES = {
   MOVING_TO_MINE: 'movingToMine',
@@ -23,7 +22,7 @@ export const muleAction = (creep, worldState) => {
     return;
   }
 
-  const sourceId = findKey(sourceMining, src => !src.muleOrder);
+  const sourceId = findKey(sourceMining, src => !src.mule);
 
   if (!sourceId) {
     console.log(`Mule unable to work, there's not a sourceMining needing a mule`);

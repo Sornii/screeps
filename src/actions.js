@@ -1,7 +1,7 @@
 import { PROFESSIONS } from './professions';
 import { minerAction } from "./miner";
+import { muleAction } from "./mule";
 
-export const muleAction = (creep) => {};
 export const builderAction = (creep) => {};
 
 export const ACTIONS = {
