@@ -14,9 +14,15 @@ export const population = ({
     const currentPopulation = countByProfession[profession];
     if (currentPopulation == null || currentPopulation < maxPopulation) {
       const [configuration, result] = createCreep(profession, spawn);
-      console.log(
-        `Created ${profession} with configuration ${configuration}. The result is ${result}`
-      );
+      if (result === ERR_NOT_ENOUGH_RESOURCES) {
+        console.log(
+          `Tried to create ${profession} with configuration ${configuration}. There's not enough resources.`
+        );
+      } else {
+        console.log(
+          `Created ${profession} with configuration ${configuration}.`
+        );
+      }
     }
   });
 };

@@ -13,19 +13,19 @@ export const muleAction = (creep, worldState) => {
   const { mainSpawn: spawn, creeps, muleOrders, sourceMining } = worldState;
 
   if (!muleOrders) {
-    worldState.muleOrders = [];
+    console.log(`Mule unable to work, there's not muleOrders in worldState`);
     return;
   }
 
   if (!sourceMining) {
-    console.log(`Mule unable to work, there's not a sourceMining in worldState`);
+    console.log(`Mule unable to work, there's not sourceMining in worldState`);
     return;
   }
 
   const sourceId = findKey(sourceMining, src => !src.mule);
 
   if (!sourceId) {
-    console.log(`Mule unable to work, there's not a sourceMining needing a mule`);
+    console.log(`Mule unable to work, there's not a sourceMining requesting a mule`);
     return;
   }
 
