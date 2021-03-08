@@ -1,8 +1,7 @@
 import { PROFESSIONS } from './professions';
 import { minerDeath } from './miner';
-
-export const muleDeath = (creep) => {};
-export const builderDeath = (creep) => {};
+import { muleDeath } from './mule';
+import { builderDeath } from './builder';
 
 export const DEATHS = {
   [PROFESSIONS.MINER]: minerDeath,
