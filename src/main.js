@@ -3,6 +3,7 @@ import { each } from 'lodash';
 import { population } from './population';
 import { dies } from './dies';
 import { action } from './actions';
+import { viewer } from "./viewer";
 
 const roomName = 'E38N53';
 const spawnName = 'Spawn1';
@@ -20,6 +21,7 @@ export const loop = () => {
     muleOrders: Memory.muleOrders,
     buildings: Memory.buildings,
     creeps: Game.creeps,
+    roads: Memory.roads,
     mainSpawn: spawn,
     mainRoom: room,
   };
@@ -33,10 +35,12 @@ export const loop = () => {
   });
 
   each(creeps, (creep) => {
-    if (creep.ticksToLive !== 0) {
+    if (creep.ticksToLive !== 1) {
       action(creep, worldState);
     }
   });
+
+  viewer(worldState);
 
   for (const i in Memory.creeps) {
     if (!Game.creeps[i]) {
