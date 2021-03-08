@@ -23,7 +23,7 @@ export const minerAction = (creep, worldState) => {
   let config = sourceMining[sourceId];
 
   const spawn = worldState.mainSpawn;
-  const mule = creeps[config.muleId];
+  const mule = creeps[config.mule];
 
   if (!source) {
     sourceId = findKey(
