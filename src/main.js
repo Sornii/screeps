@@ -53,8 +53,7 @@ export const loop = () => {
     mainRoom: room,
   };
 
-  worldState.isSpawnWithdrawable =
-    population(worldState) !== ERR_NOT_ENOUGH_RESOURCES;
+  worldState.isSpawnWithdrawable = population(worldState) === OK;
 
   hookWithdraw(worldState);
 

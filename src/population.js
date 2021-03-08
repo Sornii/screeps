@@ -10,7 +10,7 @@ export const population = ({
 
   console.log(`Current population ${JSON.stringify(countByProfession)}`);
 
-  let populationResult;
+  let populationResult = OK;
 
   each(config, (maxPopulation, profession) => {
     const currentPopulation = countByProfession[profession];
