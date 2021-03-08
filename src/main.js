@@ -5,7 +5,7 @@ import { dies } from './dies';
 import { action } from './actions';
 import { viewer } from './viewer';
 
-const roomName = 'E38N53';
+const roomName = 'W44N3';
 const spawnName = 'Spawn1';
 
 const initializeBuildings = (constructionSites) => {
