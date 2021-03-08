@@ -72,7 +72,7 @@ export const builderAction = (creep, worldState) => {
         } else if (mule) {
           creep.memory.state = STATES.WAITING_MULE;
         } else {
-          creep.memory.state = STATES.MOVING_TO_BUILDING;
+          creep.memory.state = STATES.MOVING_TO_STORE;
         }
       }
       break;
