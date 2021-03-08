@@ -18,6 +18,7 @@ export const loop = () => {
     professionPopulation: Memory.professionPopulation,
     sourceMining: Memory.sourceMining,
     muleOrders: Memory.muleOrders,
+    buildings: Memory.buildings,
     creeps: Game.creeps,
     mainSpawn: spawn,
     mainRoom: room,
