@@ -27,6 +27,7 @@ const initializeBuildings = (constructionSites) => {
       maxOccupation: 1,
     };
   });
+  return buildings;
 };
 
 // noinspection JSUnusedGlobalSymbols
