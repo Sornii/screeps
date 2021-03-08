@@ -34,6 +34,7 @@ export const muleAction = (creep, worldState) => {
 
   if (!miner) {
     console.log(`There's not a miner in the source`);
+    return;
   }
 
   if (!creep.memory.state) {
