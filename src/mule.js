@@ -30,6 +30,7 @@ export const muleAction = (creep, worldState) => {
   }
 
   const sourceConfiguration = sourceMining[sourceId];
+  sourceConfiguration.muleId = creep.id;
   const miner = creeps[first(sourceConfiguration.miners)];
 
   if (!miner) {
@@ -40,12 +41,12 @@ export const muleAction = (creep, worldState) => {
   if (!creep.memory.state) {
     if (creep.store.getFreeCapacity() > 0) {
       if (creep.pos.isNearTo(miner.pos)) {
-        creep.memory.state = STATES.MINING;
+        creep.memory.state = STATES.WAITING_TRANSFER;
       } else {
         creep.memory.state = STATES.MOVING_TO_MINE;
       }
     } else {
-      if (creep.pos.isNearTo(miner.pos)) {
+      if (creep.pos.isNearTo(spawn.pos)) {
         creep.memory.state = STATES.STORING;
       } else {
         creep.memory.state = STATES.MOVING_TO_STORE;

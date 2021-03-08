@@ -18,20 +18,22 @@ export const minerAction = (creep, worldState) => {
     return;
   }
 
-  let source = Game.getObjectById(creep.memory.sourceId);
+  let sourceId = creep.memory.sourceId;
+  let source = Game.getObjectById(sourceId);
+  let config = sourceMining[sourceId];
 
   const spawn = worldState.mainSpawn;
-  const mule = creeps[creep.memory.muleId];
+  const mule = creeps[config.muleId];
 
   if (!source) {
-    const sourceId = findKey(
+    sourceId = findKey(
       sourceMining,
       (src, key) => !src.isBusy && key !== 'undefined'
     );
     if (!sourceId) {
       return;
     }
-    let config = sourceMining[sourceId];
+    config = sourceMining[sourceId];
     if (!config.maxOccupation && !config.miners && config.isBusy == null) {
       sourceMining[sourceId] = {
         isBusy: false,
