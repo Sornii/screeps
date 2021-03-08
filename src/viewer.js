@@ -8,7 +8,8 @@ export const viewer = (worldState) => {
     const room = Game.rooms[roomId];
 
     if (!room) {
-      console.log(`Can't create visual for path. Room doesn't exist.`);
+      console.log(`Can't create visual for path. Room ${roomId} doesn't exist.`);
+      return;
     }
 
     const from = room.getPositionAt(fromX, fromY);
