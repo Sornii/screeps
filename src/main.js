@@ -4,6 +4,7 @@ import { population } from './population';
 import { dies } from './dies';
 import { action } from './actions';
 import { viewer } from './viewer';
+import { hookWithdraw } from "./hooks";
 
 const roomName = 'W44N3';
 const spawnName = 'Spawn1';
@@ -52,7 +53,11 @@ export const loop = () => {
     mainRoom: room,
   };
 
-  population(worldState);
+  const isInDebt = population(worldState);
+
+  worldState.isSpawnWithdrawable = false;
+
+  hookWithdraw(worldState);
 
   each(creeps, (creep) => {
     if (creep.ticksToLive === 1) {

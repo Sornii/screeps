@@ -21,7 +21,7 @@ export const minerAction = (creep, worldState) => {
   let source = Game.getObjectById(creep.memory.sourceId);
 
   const spawn = worldState.mainSpawn;
-  const mule = creeps[creep.memory.mule];
+  const mule = creeps[creep.memory.muleId];
 
   if (!source) {
     const sourceId = findKey(

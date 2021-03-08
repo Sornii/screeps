@@ -21,7 +21,7 @@ export const builderAction = (creep, worldState) => {
   let building = Game.getObjectById(creep.memory.buildingId);
 
   const spawn = worldState.mainSpawn;
-  const mule = creeps[creep.memory.mule];
+  const mule = creeps[creep.memory.muleId];
 
   if (!building) {
     const buildingId = findKey(

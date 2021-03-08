@@ -10,6 +10,8 @@ export const population = ({
 
   console.log(`Current population ${JSON.stringify(countByProfession)}`);
 
+  let isInDebt = false;
+
   each(config, (maxPopulation, profession) => {
     const currentPopulation = countByProfession[profession];
     if (currentPopulation == null || currentPopulation < maxPopulation) {
@@ -18,6 +20,7 @@ export const population = ({
         console.log(
           `Tried to create ${profession} with configuration ${configuration}. There's not enough resources.`
         );
+        isInDebt = true;
       } else {
         console.log(
           `Created ${profession} with configuration ${configuration}.`
@@ -25,4 +28,6 @@ export const population = ({
       }
     }
   });
+
+  return isInDebt;
 };
