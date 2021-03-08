@@ -48,7 +48,7 @@ export const builderAction = (creep, worldState) => {
   }
 
   if (!creep.memory.state) {
-    if (creep.store.getFreeCapacity() > 0) {
+    if (creep.store.getFreeCapacity() === 0) {
       if (creep.pos.isNearTo(building.pos)) {
         creep.memory.state = STATES.BUILDING;
       } else {
