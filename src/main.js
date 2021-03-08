@@ -1,10 +1,10 @@
-import { difference, each, map } from "lodash";
+import { difference, each, map } from 'lodash';
 
-import { population } from "./population";
-import { dies } from "./dies";
-import { action } from "./actions";
-import { viewer } from "./viewer";
-import { hookWithdraw } from "./hooks";
+import { population } from './population';
+import { dies } from './dies';
+import { action } from './actions';
+import { viewer } from './viewer';
+import { hookWithdraw } from './hooks';
 
 const roomName = 'W44N3';
 const spawnName = 'Spawn1';
@@ -53,7 +53,8 @@ export const loop = () => {
     mainRoom: room,
   };
 
-  worldState.isSpawnWithdrawable = population(worldState);
+  worldState.isSpawnWithdrawable =
+    population(worldState) !== ERR_NOT_ENOUGH_RESOURCES;
 
   hookWithdraw(worldState);
 
