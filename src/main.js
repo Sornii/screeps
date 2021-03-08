@@ -8,7 +8,7 @@ import { viewer } from './viewer';
 const roomName = 'E38N53';
 const spawnName = 'Spawn1';
 
-const initializeBuildings = (rooms) => {
+const initializeBuildings = (constructionSites) => {
   let buildings = Memory.buildings;
 
   if (!buildings) {
@@ -18,17 +18,14 @@ const initializeBuildings = (rooms) => {
 
   const buildingsIds = Object.keys(buildings);
 
-  each(rooms, (room) => {
-    const myConstructionSites = room.find(FIND_MY_CONSTRUCTION_SITES);
-    const ids = map(myConstructionSites, 'id');
-    const idsToInsert = difference(ids, buildingsIds);
-    each(idsToInsert, (idToInsert) => {
-      buildings[idToInsert] = {
-        isBusy: false,
-        builders: [],
-        maxOccupation: 1,
-      };
-    });
+  const ids = map(constructionSites, 'id');
+  const idsToInsert = difference(ids, buildingsIds);
+  each(idsToInsert, (idToInsert) => {
+    buildings[idToInsert] = {
+      isBusy: false,
+      builders: [],
+      maxOccupation: 1,
+    };
   });
 };
 
@@ -38,7 +35,9 @@ export const loop = () => {
   const room = Game.rooms[roomName];
   const creeps = Game.creeps;
 
-  const buildings = initializeBuildings([room]);
+  const constructionSites = room.find(FIND_CONSTRUCTION_SITES);
+
+  const buildings = initializeBuildings(constructionSites);
 
   const worldState = {
     roomConstructionSites: spawn.room.find(FIND_CONSTRUCTION_SITES),
