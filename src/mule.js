@@ -76,7 +76,7 @@ export const muleAction = (creep, worldState) => {
       }
       break;
     case STATES.MOVING_TO_STORE:
-      if (creep.pos.isNearTo(miner.pos)) {
+      if (creep.pos.isNearTo(spawn.pos)) {
         creep.memory.state = STATES.STORING;
       } else {
         creep.memory.state = STATES.MOVING_TO_STORE;
