@@ -34,7 +34,7 @@ export const muleAction = (creep, worldState) => {
   }
 
   const sourceConfiguration = sourceMining[sourceId];
-  sourceConfiguration.muleId = creep.id;
+  sourceConfiguration.mule = creep.name;
   const miner = creeps[first(sourceConfiguration.miners)];
 
   if (!miner) {
@@ -95,9 +95,6 @@ export const muleAction = (creep, worldState) => {
 
   // State-action
   switch (creep.memory.state) {
-    case STATES.WAITING_TRANSFER:
-      creep.say(`Common, let's go!`)
-      break;
     case STATES.MOVING_TO_MINE:
       creep.moveTo(miner);
       break;
