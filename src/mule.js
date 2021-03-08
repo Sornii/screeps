@@ -32,6 +32,10 @@ export const muleAction = (creep, worldState) => {
   const sourceConfiguration = sourceMining[sourceId];
   const miner = creeps[first(sourceConfiguration.miners)];
 
+  if (!miner) {
+    console.log(`There's not a miner in the source`);
+  }
+
   if (!creep.memory.state) {
     if (creep.store.getFreeCapacity() > 0) {
       if (creep.pos.isNearTo(miner.pos)) {
