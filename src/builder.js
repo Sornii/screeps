@@ -42,7 +42,7 @@ export const builderAction = (creep, worldState) => {
     }
     config.builders.push(creep.name);
     config.isBusy = config.builders.length >= config.maxOccupation;
-    creep.memory.sourceId = buildingId;
+    creep.memory.buildingId = buildingId;
 
     building = Game.getObjectById(buildingId);
   }
