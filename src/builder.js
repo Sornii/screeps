@@ -49,7 +49,7 @@ export const builderAction = (creep, worldState) => {
 
   if (!creep.memory.state) {
     if (creep.store.getFreeCapacity() === 0) {
-      if (creep.pos.isNearTo(building.pos)) {
+      if (creep.pos.inRangeTo(building.pos, 3)) {
         creep.memory.state = STATES.BUILDING;
       } else {
         creep.memory.state = STATES.MOVING_TO_BUILDING;
@@ -77,7 +77,7 @@ export const builderAction = (creep, worldState) => {
       }
       break;
     case STATES.MOVING_TO_BUILDING:
-      if (creep.pos.isNearTo(building.pos)) {
+      if (creep.pos.inRangeTo(building.pos, 3)) {
         creep.memory.state = STATES.BUILDING;
       } else {
         creep.memory.state = STATES.MOVING_TO_BUILDING;
@@ -92,7 +92,7 @@ export const builderAction = (creep, worldState) => {
       break;
     case STATES.WITHDRAWING:
       if (creep.store.getFreeCapacity() === 0) {
-        if (creep.pos.isNearTo(building.pos)) {
+        if (creep.pos.inRangeTo(building.pos, 3)) {
           creep.memory.state = STATES.BUILDING;
         } else {
           creep.memory.state = STATES.MOVING_TO_BUILDING;
