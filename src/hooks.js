@@ -1,4 +1,4 @@
-import { minerDeath } from './dies';
+import { minerDeath } from './miner';
 
 if (!Creep.prototype._suicide) {
   // Store the original method
@@ -23,8 +23,6 @@ export const hookWithdraw = (worldState) => {
 
     // Create our new function
     Creep.prototype.withdraw = function (...args) {
-
-
       if (!worldState.isSpawnWithdrawable) {
         console.log(`Spawn is locked`);
         return;
