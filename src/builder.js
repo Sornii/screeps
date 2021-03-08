@@ -40,8 +40,8 @@ export const builderAction = (creep, worldState) => {
       };
       config = buildings[buildingId];
     }
-    config.miners.push(creep.name);
-    config.isBusy = config.miners.length >= config.maxOccupation;
+    config.builders.push(creep.name);
+    config.isBusy = config.builders.length >= config.maxOccupation;
     creep.memory.sourceId = buildingId;
 
     building = Game.getObjectById(buildingId);
@@ -134,7 +134,7 @@ export const builderDeath = (creep, worldState) => {
 
   const buildingId = creep.memory.buildingId;
   let config = buildings[buildingId];
-  if (!config.maxOccupation && !config.miners && config.isBusy == null) {
+  if (!config.maxOccupation && !config.builders && config.isBusy == null) {
     buildings[buildingId] = {
       isBusy: false,
       builders: [],
@@ -143,5 +143,5 @@ export const builderDeath = (creep, worldState) => {
   } else {
     remove(config.builders, (name) => creep.name === name);
   }
-  config.isBusy = config.miners.length >= config.maxOccupation;
+  config.isBusy = config.builders.length >= config.maxOccupation;
 };
