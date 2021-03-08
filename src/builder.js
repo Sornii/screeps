@@ -114,7 +114,9 @@ export const builderAction = (creep, worldState) => {
   switch (creep.memory.state) {
     case STATES.BUILDING:
       if (creep.build(building) < 0) {
-        creep.upgradeController(building);
+        if (creep.upgradeController(building) < 0) {
+          delete creep.memory.buildingId;
+        }
       }
       break;
     case STATES.MOVING_TO_BUILDING:

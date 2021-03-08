@@ -1,12 +1,36 @@
-import { each } from 'lodash';
+import { difference, each, map } from 'lodash';
 
 import { population } from './population';
 import { dies } from './dies';
 import { action } from './actions';
-import { viewer } from "./viewer";
+import { viewer } from './viewer';
 
 const roomName = 'E38N53';
 const spawnName = 'Spawn1';
+
+const initializeBuildings = (rooms) => {
+  let buildings = Memory.buildings;
+
+  if (!buildings) {
+    Memory.buildings = {};
+    buildings = Memory.buildings;
+  }
+
+  const buildingsIds = Object.keys(buildings);
+
+  each(rooms, (room) => {
+    const myConstructionSites = room.find(FIND_MY_CONSTRUCTION_SITES);
+    const ids = map(myConstructionSites, 'id');
+    const idsToInsert = difference(ids, buildingsIds);
+    each(idsToInsert, (idToInsert) => {
+      buildings[idToInsert] = {
+        isBusy: false,
+        builders: [],
+        maxOccupation: 1,
+      };
+    });
+  });
+};
 
 // noinspection JSUnusedGlobalSymbols
 export const loop = () => {
@@ -14,12 +38,14 @@ export const loop = () => {
   const room = Game.rooms[roomName];
   const creeps = Game.creeps;
 
+  const buildings = initializeBuildings([room]);
+
   const worldState = {
     roomConstructionSites: spawn.room.find(FIND_CONSTRUCTION_SITES),
     professionPopulation: Memory.professionPopulation,
     sourceMining: Memory.sourceMining,
     muleOrders: Memory.muleOrders,
-    buildings: Memory.buildings,
+    buildings: buildings,
     creeps: Game.creeps,
     roads: Memory.roads,
     mainSpawn: spawn,
