@@ -1,9 +1,9 @@
-import { difference, each, map } from 'lodash';
+import { difference, each, map } from "lodash";
 
-import { population } from './population';
-import { dies } from './dies';
-import { action } from './actions';
-import { viewer } from './viewer';
+import { population } from "./population";
+import { dies } from "./dies";
+import { action } from "./actions";
+import { viewer } from "./viewer";
 import { hookWithdraw } from "./hooks";
 
 const roomName = 'W44N3';
@@ -53,9 +53,7 @@ export const loop = () => {
     mainRoom: room,
   };
 
-  const isInDebt = population(worldState);
-
-  worldState.isSpawnWithdrawable = false;
+  worldState.isSpawnWithdrawable = population(worldState);
 
   hookWithdraw(worldState);
 
