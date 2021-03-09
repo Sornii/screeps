@@ -1,7 +1,14 @@
-import { curry, map, fromPairs } from 'lodash';
+import { curry, map, reduce } from 'lodash';
 
 export const initializeState = curry((props, worldState) => {
-  const state = fromPairs(map(props, (prop) => [prop, { ...Memory[prop] }]));
+  const state = reduce(
+    props,
+    (prev, curr) => {
+      prev[curr] = { ...Memory[curr] };
+      return prev;
+    },
+    {}
+  );
 
   return { ...worldState, ...state };
 });
