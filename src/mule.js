@@ -16,7 +16,14 @@ export const STATES = {
 const sourceMule = (creep, sourceId, worldState) => {
   const { mainSpawn: spawn, creeps, sourceMining } = worldState;
 
-  const config = sourceMining[sourceId];
+  let config = sourceMining[sourceId];
+
+  creep.memory.sourceId = sourceId;
+  config = {
+    ...config,
+    mule: creep.name,
+  };
+
   const miner = creeps[first(config.miners)];
 
   if (!miner) {
@@ -103,9 +110,15 @@ const sourceMule = (creep, sourceId, worldState) => {
 const buildingMule = (creep, buildingId, worldState) => {
   const { mainSpawn: spawn, creeps, buildings } = worldState;
 
-  const buildingConfiguration = buildings[buildingId];
-  buildingConfiguration.mule = creep.name;
-  const builders = buildingConfiguration.builders;
+  let config = buildings[buildingId];
+
+  creep.memory.buildingId = buildingId;
+  config = {
+    ...config,
+    mule: creep.name,
+  };
+
+  const builders = config.builders;
   const size = builders.length;
   const builderWaitingMule = find(
     builders,
@@ -168,8 +181,6 @@ export const muleAction = (creep, worldState) => {
       sourceMining,
       (src) => src.isWithMule && (!src.mule || !creeps[src.mule])
     );
-
-    creep.memory.sourceId = sourceId;
   }
 
   if (!sourceId) {
@@ -177,8 +188,6 @@ export const muleAction = (creep, worldState) => {
       buildings,
       (bld) => bld.isWithMule && (!bld.mule || !creeps[bld.mule])
     );
-
-    creep.memory.buildingId = buildingId;
   }
 
   if (sourceId) {
