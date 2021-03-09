@@ -13,7 +13,7 @@ export const STATES = {
 export const builderAction = (creep, worldState) => {
   const { creeps, buildings } = worldState;
 
-  if (!buildings) {
+  if (!buildings || !Object.keys(buildings).length) {
     console.log('Builders have nothing to do.');
     return;
   }
