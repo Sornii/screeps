@@ -215,24 +215,18 @@ export const muleDeath = (worldState) => {
   }
 
   let config = sourceMining[sourceId];
-  if (!config || Object.keys(config).length === 0) {
-    config = {
-      isBusy: false,
-      miners: [],
-      maxOccupation: 1,
-    };
-  } else {
-    config = {
-      ...config,
-      mule: null,
-    };
+  if (!config) {
+    return worldState;
   }
 
   return {
     ...worldState,
     sourceMining: {
       ...sourceMining,
-      [sourceId]: config,
+      [sourceId]: {
+        ...config,
+        mule: null,
+      },
     },
   };
 };

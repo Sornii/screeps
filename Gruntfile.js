@@ -1,5 +1,4 @@
 module.exports = function (grunt) {
-
   grunt.loadNpmTasks('grunt-screeps');
   grunt.loadNpmTasks('grunt-babel');
 
@@ -7,7 +6,16 @@ module.exports = function (grunt) {
     babel: {
       options: {
         sourceMap: true,
-        presets: ["@babel/preset-env"],
+        presets: [
+          [
+            '@babel/preset-env',
+            {
+              targets: {
+                node: 'current',
+              },
+            },
+          ],
+        ],
       },
       dist: {
         files: [
@@ -15,10 +23,10 @@ module.exports = function (grunt) {
             expand: true,
             cwd: 'src/',
             src: ['*.js'],
-            dest: 'dist/'
-          }
+            dest: 'dist/',
+          },
         ],
-      }
+      },
     },
     screeps: {
       options: {
@@ -28,9 +36,9 @@ module.exports = function (grunt) {
         //server: 'season'
       },
       dist: {
-        src: ['dist/*.js']
-      }
-    }
+        src: ['dist/*.js'],
+      },
+    },
   });
 
   grunt.registerTask('default', ['babel', 'screeps']);
