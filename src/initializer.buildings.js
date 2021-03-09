@@ -1,4 +1,4 @@
-import { take, curry, difference, each, map, filter } from 'lodash';
+import { without, take, curry, difference, each, map, filter } from 'lodash';
 import { PROFESSIONS } from './professions';
 
 export const initializeBuildings = curry((constructionSites, worldState) => {
@@ -39,6 +39,20 @@ export const initializeBuildings = curry((constructionSites, worldState) => {
         }
       });
     }
+  });
+
+  each(creepsByProfession[PROFESSIONS.BUILDER], (builder) => {
+    const trueBuildingId = builder.memory.buildingId;
+    const falseBuildings = filter(
+      buildings,
+      (building, buildingId) =>
+        building.builders.includes(builder.name) &&
+        buildingId !== trueBuildingId
+    );
+    each(falseBuildings, (building) => {
+      building.builders = without(building.builders, builder.name);
+      building.isBusy = building.builders >= building.maxOccupation;
+    });
   });
 
   return { ...worldState, buildings };
