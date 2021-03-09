@@ -10,6 +10,7 @@ import { initializeBuildings } from './initializer.buildings';
 import { pipe } from './pipe';
 import { writeMemory } from './write';
 import { initializeDefaultCreepOrder } from './professions';
+import { initializeSourceMining } from './initializer.sourceMining';
 
 const roomName = 'W8N26';
 const spawnName = 'Spawn1';
@@ -25,6 +26,7 @@ export const loop = () => {
       'roads',
       'buildings',
     ]),
+    initializeSourceMining,
     (worldState) => {
       const { mainRoom } = worldState;
       const constructionSites = mainRoom.find(FIND_CONSTRUCTION_SITES);
