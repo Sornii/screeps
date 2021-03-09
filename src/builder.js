@@ -18,13 +18,15 @@ export const builderAction = (creep, worldState) => {
     return;
   }
 
-  let building = Game.getObjectById(creep.memory.buildingId);
+  let buildingId = creep.memory.buildingId;
+  let building = Game.getObjectById(buildingId);
+  let config = buildings[buildingId];
 
   const spawn = worldState.mainSpawn;
   const mule = creeps[creep.memory.mule];
 
   if (!building) {
-    const buildingId = findKey(
+    buildingId = findKey(
       buildings,
       (src, key) => !src.isBusy && key !== 'undefined'
     );
@@ -32,17 +34,18 @@ export const builderAction = (creep, worldState) => {
       console.log('Builder have not found a building to work on');
       return;
     }
-    let config = buildings[buildingId];
     if (Object.keys(config).length === 0) {
-      buildings[buildingId] = {
+      config = {
         isBusy: false,
         builders: [],
         maxOccupation: 1,
       };
-      config = buildings[buildingId];
     }
     config.builders.push(creep.name);
-    config.isBusy = config.builders.length >= config.maxOccupation;
+    config = {
+      ...config,
+      isBusy: config.builders.length >= config.maxOccupation,
+    };
     creep.memory.buildingId = buildingId;
 
     building = Game.getObjectById(buildingId);
@@ -130,6 +133,14 @@ export const builderAction = (creep, worldState) => {
       creep.withdraw(spawn, RESOURCE_ENERGY);
       break;
   }
+
+  return {
+    ...worldState,
+    buildings: {
+      ...buildings,
+      [buildingId]: config,
+    },
+  };
 };
 
 export const builderDeath = (creep, worldState) => {
