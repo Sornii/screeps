@@ -1,14 +1,14 @@
-import { reduce, curry, difference, each, map } from 'lodash';
+import { reduce } from 'lodash';
 
 import { population } from './population';
 import { dies } from './dies';
 import { action } from './actions';
 import { viewer } from './viewer';
 import { hookWithdraw } from './hooks';
-import { initializeState } from './initializers/state';
-import { initializeBuildings } from './initializers/buildings';
+import { initializeState } from './initializer.state';
+import { initializeBuildings } from './initializer.buildings';
 import { pipe } from './pipe';
-import { writeMemory } from "./write";
+import { writeMemory } from './write';
 
 const roomName = 'W8N26';
 const spawnName = 'Spawn1';
@@ -21,7 +21,7 @@ export const loop = () => {
       'sourceMining',
       'muleOrders',
       'roads',
-      'buildings'
+      'buildings',
     ]),
     (worldState) => {
       const { room } = worldState;
@@ -62,7 +62,7 @@ export const loop = () => {
       'sourceMining',
       'muleOrders',
       'roads',
-      'buildings'
+      'buildings',
     ])
   )({
     creeps: Game.creeps,
