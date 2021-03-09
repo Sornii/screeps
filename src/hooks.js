@@ -33,4 +33,6 @@ export const hookWithdraw = curry((worldState) => {
       return this._withdraw(...args);
     };
   }
+
+  return worldState;
 });
