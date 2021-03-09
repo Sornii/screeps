@@ -15,7 +15,7 @@ export const builderAction = (creep, worldState) => {
 
   if (!buildings || !Object.keys(buildings).length) {
     console.log('Builders have nothing to do.');
-    return;
+    return worldState;
   }
 
   let buildingId = creep.memory.buildingId;
@@ -32,7 +32,7 @@ export const builderAction = (creep, worldState) => {
     );
     if (!buildingId) {
       console.log('Builder have not found a building to work on');
-      return;
+      return worldState;
     }
     if (Object.keys(config).length === 0) {
       config = {
@@ -148,8 +148,8 @@ export const builderDeath = (creep, worldState) => {
 
   const buildingId = creep.memory.buildingId;
   let config = buildings[buildingId];
-  if (!config.maxOccupation && !config.builders && config.isBusy == null) {
-    buildings[buildingId] = {
+  if (Object.keys(config).length === 0) {
+    config = {
       isBusy: false,
       builders: [],
       maxOccupation: 1,
@@ -157,5 +157,16 @@ export const builderDeath = (creep, worldState) => {
   } else {
     remove(config.builders, (name) => creep.name === name);
   }
-  config.isBusy = config.builders.length >= config.maxOccupation;
+  config = {
+    ...config,
+    isBusy: config.miners.length >= config.maxOccupation,
+  };
+
+  return {
+    ...worldState,
+    buildings: {
+      ...buildings,
+      [buildingId]: config,
+    },
+  };
 };

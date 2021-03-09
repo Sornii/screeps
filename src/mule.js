@@ -1,4 +1,4 @@
-import { find, first, findKey } from 'lodash';
+import { find, first, findKey, remove } from 'lodash';
 import { STATES as BUILDER_STATES } from './builder';
 
 export const STATES = {
@@ -21,7 +21,7 @@ const sourceMule = (creep, sourceId, worldState) => {
 
   if (!miner) {
     console.log(`There's not a miner in the source`);
-    return;
+    return worldState;
   }
 
   if (!creep.memory.state) {
@@ -115,7 +115,7 @@ const buildingMule = (creep, buildingId, worldState) => {
 
   if (!firstBuilder) {
     console.log(`There's not a builder in the source`);
-    return;
+    return worldState;
   }
 
   if (!creep.memory.state) {
@@ -151,13 +151,13 @@ export const muleAction = (creep, worldState) => {
   // TODO: rethink
   if (!muleOrders) {
     console.log(`Mule unable to work, there's not muleOrders in worldState`);
-    return;
+    return worldState;
   }
 
   // TODO: or buildings
   if (!sourceMining) {
     console.log(`Mule unable to work, there's not sourceMining in worldState`);
-    return;
+    return worldState;
   }
 
   let sourceId = creep.memory.sourceId;
@@ -196,4 +196,34 @@ export const muleAction = (creep, worldState) => {
   return worldState;
 };
 
-export const muleDeath = () => {};
+export const muleDeath = (worldState) => {
+  const { sourceMining } = worldState;
+
+  const sourceId = creep.memory.sourceId;
+
+  if (!sourceId) {
+    return worldState;
+  }
+
+  let config = sourceMining[sourceId];
+  if (Object.keys(config).length === 0) {
+    config = {
+      isBusy: false,
+      miners: [],
+      maxOccupation: 1,
+    };
+  } else {
+    config = {
+      ...config,
+      mule: null,
+    };
+  }
+
+  return {
+    ...worldState,
+    sourceMining: {
+      ...sourceMining,
+      [sourceId]: config,
+    },
+  };
+};

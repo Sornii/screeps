@@ -14,8 +14,8 @@ export const minerAction = (creep, worldState) => {
   const { creeps, sourceMining } = worldState;
 
   if (!sourceMining || !Object.keys(sourceMining).length) {
-    console.log(new Error('Source mining not configured'));
-    return;
+    console.log('Source mining not configured');
+    return worldState;
   }
 
   let sourceId = creep.memory.sourceId;
@@ -28,7 +28,7 @@ export const minerAction = (creep, worldState) => {
       (src, key) => !src.isBusy && key !== 'undefined'
     );
     if (!sourceId) {
-      return;
+      return worldState;
     }
     config = sourceMining[sourceId];
     if (Object.keys(config).length === 0) {
@@ -155,9 +155,14 @@ export const minerDeath = (creep, worldState) => {
   const { sourceMining } = worldState;
 
   const sourceId = creep.memory.sourceId;
+
+  if (!sourceId) {
+    return worldState;
+  }
+
   let config = sourceMining[sourceId];
-  if (!config.maxOccupation && !config.miners && config.isBusy == null) {
-    sourceMining[sourceId] = {
+  if (Object.keys(config).length === 0) {
+    config = {
       isBusy: false,
       miners: [],
       maxOccupation: 1,
@@ -165,5 +170,16 @@ export const minerDeath = (creep, worldState) => {
   } else {
     remove(config.miners, (name) => creep.name === name);
   }
-  config.isBusy = config.miners.length >= config.maxOccupation;
+  config = {
+    ...config,
+    isBusy: config.miners.length >= config.maxOccupation,
+  };
+
+  return {
+    ...worldState,
+    sourceMining: {
+      ...sourceMining,
+      [sourceId]: config,
+    },
+  };
 };
