@@ -29,6 +29,8 @@ export const muleAction = (creep, worldState) => {
       sourceMining,
       (src) => src.isWithMule && (!src.mule || !creeps[src.mule])
     );
+
+    creep.memory.sourceId = sourceId;
   }
 
   if (!sourceId) {
