@@ -34,7 +34,7 @@ export const builderAction = (creep, worldState) => {
       console.log('Builder have not found a building to work on');
       return worldState;
     }
-    if (Object.keys(config).length === 0) {
+    if (!config || Object.keys(config).length === 0) {
       config = {
         isBusy: false,
         builders: [],
@@ -148,7 +148,7 @@ export const builderDeath = (creep, worldState) => {
 
   const buildingId = creep.memory.buildingId;
   let config = buildings[buildingId];
-  if (Object.keys(config).length === 0) {
+  if (!config || Object.keys(config).length === 0) {
     config = {
       isBusy: false,
       builders: [],

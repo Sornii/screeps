@@ -206,7 +206,7 @@ export const muleDeath = (worldState) => {
   }
 
   let config = sourceMining[sourceId];
-  if (Object.keys(config).length === 0) {
+  if (!config || Object.keys(config).length === 0) {
     config = {
       isBusy: false,
       miners: [],
