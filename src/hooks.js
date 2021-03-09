@@ -1,3 +1,4 @@
+import { curry } from 'lodash';
 import { minerDeath } from './miner';
 
 if (!Creep.prototype._suicide) {
@@ -16,7 +17,7 @@ if (!Creep.prototype._suicide) {
   };
 }
 
-export const hookWithdraw = (worldState) => {
+export const hookWithdraw = curry((worldState) => {
   if (!Creep.prototype._withdraw) {
     // Store the original method
     Creep.prototype._withdraw = Creep.prototype.withdraw;
@@ -32,4 +33,4 @@ export const hookWithdraw = (worldState) => {
       return this._withdraw(...args);
     };
   }
-};
+});

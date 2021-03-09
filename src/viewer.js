@@ -1,6 +1,6 @@
-import { each } from 'lodash';
+import { curry, each } from 'lodash';
 
-export const viewer = (worldState) => {
+export const viewer = curry((worldState) => {
   const { roads } = worldState;
 
   each(roads, (road) => {
@@ -8,7 +8,9 @@ export const viewer = (worldState) => {
     const room = Game.rooms[roomId];
 
     if (!room) {
-      console.log(`Can't create visual for path. Room ${roomId} doesn't exist.`);
+      console.log(
+        `Can't create visual for path. Room ${roomId} doesn't exist.`
+      );
       return;
     }
 
@@ -22,4 +24,4 @@ export const viewer = (worldState) => {
     });
     room.visual.poly(path);
   });
-};
+});

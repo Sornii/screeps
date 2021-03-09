@@ -32,15 +32,17 @@ export const minerAction = (creep, worldState) => {
     }
     config = sourceMining[sourceId];
     if (Object.keys(config).length === 0) {
-      sourceMining[sourceId] = {
+      config = {
         isBusy: false,
         miners: [],
         maxOccupation: 1,
       };
-      config = sourceMining[sourceId];
     }
     config.miners.push(creep.name);
-    config.isBusy = config.miners.length >= config.maxOccupation;
+    config = {
+      ...config,
+      isBusy: config.miners.length >= config.maxOccupation,
+    };
     creep.memory.sourceId = sourceId;
 
     source = Game.getObjectById(sourceId);
@@ -139,6 +141,14 @@ export const minerAction = (creep, worldState) => {
     case STATES.TRANSFERRING:
       creep.transfer(mule, RESOURCE_ENERGY);
   }
+
+  return {
+    ...worldState,
+    sourceMining: {
+      ...sourceMining,
+      [sourceId]: config,
+    },
+  };
 };
 
 export const minerDeath = (creep, worldState) => {

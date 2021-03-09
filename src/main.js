@@ -1,75 +1,74 @@
-import { difference, each, map } from 'lodash';
+import { reduce, curry, difference, each, map } from 'lodash';
 
 import { population } from './population';
 import { dies } from './dies';
 import { action } from './actions';
 import { viewer } from './viewer';
 import { hookWithdraw } from './hooks';
+import { initializeState } from './initializers/state';
+import { initializeBuildings } from './initializers/buildings';
+import { pipe } from './pipe';
+import { writeMemory } from "./write";
 
 const roomName = 'W8N26';
 const spawnName = 'Spawn1';
 
-const initializeBuildings = (constructionSites) => {
-  let buildings = Memory.buildings;
-
-  if (!buildings) {
-    Memory.buildings = {};
-    buildings = Memory.buildings;
-  }
-
-  const buildingsIds = Object.keys(buildings);
-
-  const ids = map(constructionSites, 'id');
-  const idsToInsert = difference(ids, buildingsIds);
-  each(idsToInsert, (idToInsert) => {
-    buildings[idToInsert] = {
-      isBusy: false,
-      builders: [],
-      maxOccupation: 1,
-    };
-  });
-  return buildings;
-};
-
 // noinspection JSUnusedGlobalSymbols
 export const loop = () => {
-  const spawn = Game.spawns[spawnName];
-  const room = Game.rooms[roomName];
-  const creeps = Game.creeps;
-
-  const constructionSites = room.find(FIND_CONSTRUCTION_SITES);
-
-  const buildings = initializeBuildings(constructionSites);
-
-  const worldState = {
-    roomConstructionSites: spawn.room.find(FIND_CONSTRUCTION_SITES),
-    professionPopulation: Memory.professionPopulation,
-    sourceMining: Memory.sourceMining,
-    muleOrders: Memory.muleOrders,
-    buildings: buildings,
+  pipe(
+    initializeState([
+      'professionPopulation',
+      'sourceMining',
+      'muleOrders',
+      'roads',
+      'buildings'
+    ]),
+    (worldState) => {
+      const { room } = worldState;
+      const constructionSites = room.find(FIND_CONSTRUCTION_SITES);
+      return initializeBuildings(constructionSites)(worldState);
+    },
+    population,
+    hookWithdraw,
+    (worldState) => {
+      const { creeps } = worldState;
+      return reduce(
+        creeps,
+        (state, creep) => {
+          if (creep.ticksToLive === 1) {
+            return dies(creep, state);
+          }
+          return state;
+        },
+        worldState
+      );
+    },
+    (worldState) => {
+      const { creeps } = worldState;
+      return reduce(
+        creeps,
+        (state, creep) => {
+          if (creep.ticksToLive !== 1) {
+            return action(creep, state);
+          }
+          return state;
+        },
+        worldState
+      );
+    },
+    viewer,
+    writeMemory([
+      'professionPopulation',
+      'sourceMining',
+      'muleOrders',
+      'roads',
+      'buildings'
+    ])
+  )({
     creeps: Game.creeps,
-    roads: Memory.roads,
-    mainSpawn: spawn,
-    mainRoom: room,
-  };
-
-  worldState.isSpawnWithdrawable = population(worldState) === OK;
-
-  hookWithdraw(worldState);
-
-  each(creeps, (creep) => {
-    if (creep.ticksToLive === 1) {
-      dies(creep, worldState);
-    }
+    mainSpawn: Game.spawns[spawnName],
+    mainRoom: Game.rooms[roomName],
   });
-
-  each(creeps, (creep) => {
-    if (creep.ticksToLive !== 1) {
-      action(creep, worldState);
-    }
-  });
-
-  viewer(worldState);
 
   for (const i in Memory.creeps) {
     if (!Game.creeps[i]) {
