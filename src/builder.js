@@ -21,14 +21,15 @@ export const builderAction = (creep, worldState) => {
   let building = Game.getObjectById(creep.memory.buildingId);
 
   const spawn = worldState.mainSpawn;
-  const mule = creeps[creep.memory.muleId];
+  const mule = creeps[creep.memory.mule];
 
   if (!building) {
     const buildingId = findKey(
       buildings,
       (src, key) => !src.isBusy && key !== 'undefined'
     );
-    if (!buildings) {
+    if (!buildingId) {
+      console.log('Builder have not found a building to work on');
       return;
     }
     let config = buildings[buildingId];
