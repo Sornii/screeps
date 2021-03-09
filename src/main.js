@@ -1,4 +1,4 @@
-import { map, sortBy, reduce } from 'lodash';
+import { sortBy, reduce } from 'lodash';
 
 import { population } from './population';
 import { dies } from './dies';
@@ -9,7 +9,7 @@ import { initializeState } from './initializer.state';
 import { initializeBuildings } from './initializer.buildings';
 import { pipe } from './pipe';
 import { writeMemory } from './write';
-import { PROFESSIONS } from './professions';
+import { initializeDefaultCreepOrder } from './professions';
 
 const roomName = 'W8N26';
 const spawnName = 'Spawn1';
@@ -17,6 +17,7 @@ const spawnName = 'Spawn1';
 // noinspection JSUnusedGlobalSymbols
 export const loop = () => {
   pipe(
+    initializeDefaultCreepOrder,
     initializeState([
       'professionPopulation',
       'sourceMining',
@@ -34,17 +35,7 @@ export const loop = () => {
     (worldState) => {
       const { creeps } = worldState;
       return reduce(
-        sortBy(
-          map(creeps, (creep) => ({
-            ...creep,
-            sortOrder: {
-              [PROFESSIONS.MINER]: 0,
-              [PROFESSIONS.BUILDER]: 1,
-              [PROFESSIONS.MULE]: 2,
-            }[creep.memory.profession],
-          })),
-          'sortOrder'
-        ),
+        sortBy(creeps, 'creep.memory.sortOrder'),
         (state, creep) => {
           if (creep.ticksToLive === 1) {
             return dies(creep, state);

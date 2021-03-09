@@ -1,3 +1,5 @@
+import { curry, each } from 'lodash';
+
 /**
  * General worker purpose
  * @returns {["work", "work", "work", "move"]}
@@ -14,8 +16,9 @@ export const miner = () => {
     `Worker_${timestamp}`,
     {
       memory: {
-        profession: 'miner',
+        profession: PROFESSIONS.MINER,
         createdAt: timestamp,
+        order: ORDER[PROFESSIONS.MINER],
       },
     },
   ];
@@ -38,8 +41,9 @@ export const mule = () => {
     `Mule_${timestamp}`,
     {
       memory: {
-        profession: 'mule',
+        profession: PROFESSIONS.MULE,
         createdAt: timestamp,
+        order: ORDER[PROFESSIONS.MULE],
       },
     },
   ];
@@ -62,8 +66,9 @@ export const builder = () => {
     `Builder_${timestamp}`,
     {
       memory: {
-        profession: 'builder',
+        profession: PROFESSIONS.BUILDER,
         createdAt: timestamp,
+        order: ORDER[PROFESSIONS.BUILDER],
       },
     },
   ];
@@ -89,6 +94,24 @@ export const CREATORS = {
   [PROFESSIONS.MULE]: createMule,
   [PROFESSIONS.BUILDER]: createBuilder,
 };
+
+export const ORDER = {
+  [PROFESSIONS.MINER]: 100,
+  [PROFESSIONS.MULE]: 200,
+  [PROFESSIONS.BUILDER]: 300,
+};
+
+export const initializeDefaultCreepOrder = curry((worldState) => {
+  const { creeps } = worldState;
+
+  each(creeps, (creep) => {
+    if (!creep.memory.order) {
+      creep.memory.order = ORDER[creep.memory.profession];
+    }
+  });
+
+  return worldState;
+});
 
 export const createCreep = (profession, ...args) => {
   return CREATORS[profession](...args);
