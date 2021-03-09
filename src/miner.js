@@ -13,7 +13,7 @@ export const STATES = {
 export const minerAction = (creep, worldState) => {
   const { creeps, sourceMining } = worldState;
 
-  if (!sourceMining) {
+  if (!sourceMining || !Object.keys(sourceMining).length) {
     console.log(new Error('Source mining not configured'));
     return;
   }
