@@ -1,4 +1,4 @@
-import { pick, curry } from 'lodash';
+import { pick, curry, each } from 'lodash';
 
 export const writeMemory = curry((props, worldState) => {
   const state = pick(worldState, props);
