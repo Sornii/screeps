@@ -1,4 +1,4 @@
-import { findKey, remove } from 'lodash';
+import { without, findKey, remove } from 'lodash';
 
 export const STATES = {
   MOVING_TO_BUILDING: 'movingToBuilding',
@@ -147,26 +147,23 @@ export const builderDeath = (creep, worldState) => {
   const { buildings } = worldState;
 
   const buildingId = creep.memory.buildingId;
-  let config = buildings[buildingId];
-  if (!config || Object.keys(config).length === 0) {
-    config = {
-      isBusy: false,
-      builders: [],
-      maxOccupation: 1,
-    };
-  } else {
-    remove(config.builders, (name) => creep.name === name);
+  const config = buildings[buildingId];
+
+  if (!config) {
+    return worldState;
   }
-  config = {
-    ...config,
-    isBusy: config.miners.length >= config.maxOccupation,
-  };
+
+  const builders = without(config.builders, creep.name);
 
   return {
     ...worldState,
     buildings: {
       ...buildings,
-      [buildingId]: config,
+      [buildingId]: {
+        ...config,
+        builders,
+        isBusy: builders.length >= config.maxOccupation,
+      },
     },
   };
 };

@@ -206,7 +206,7 @@ export const muleAction = (creep, worldState) => {
 };
 
 export const muleDeath = (worldState) => {
-  const { sourceMining } = worldState;
+  const { creep, sourceMining } = worldState;
 
   const sourceId = creep.memory.sourceId;
 
@@ -214,7 +214,7 @@ export const muleDeath = (worldState) => {
     return worldState;
   }
 
-  let config = sourceMining[sourceId];
+  const config = sourceMining[sourceId];
   if (!config) {
     return worldState;
   }
