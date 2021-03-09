@@ -1,4 +1,4 @@
-import { groupBy } from 'lodash';
+import { curry, groupBy } from 'lodash';
 
 export const initializeByProfession = curry((worldState) => {
   const { creeps } = worldState;
