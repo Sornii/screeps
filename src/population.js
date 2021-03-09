@@ -27,5 +27,7 @@ export const population = curry((worldState) => {
     }
   });
 
+  console.log(`Is spawn locked? ${isSpawnLocked}`);
+
   return { ...worldState, isSpawnLocked };
 });

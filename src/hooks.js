@@ -18,21 +18,7 @@ if (!Creep.prototype._suicide) {
 }
 
 export const hookWithdraw = curry((worldState) => {
-  if (!Creep.prototype._withdraw) {
-    // Store the original method
-    Creep.prototype._withdraw = Creep.prototype.withdraw;
-
-    // Create our new function
-    Creep.prototype.withdraw = function (...args) {
-      if (worldState.isSpawnLocked) {
-        console.log(`Spawn is locked`);
-        return;
-      }
-
-      // Call and return the original method
-      return this._withdraw(...args);
-    };
-  }
+  // TODO: it does not reset each ticket, think in another solution
 
   return worldState;
 });

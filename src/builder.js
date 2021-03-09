@@ -11,7 +11,7 @@ export const STATES = {
 };
 
 export const builderAction = (creep, worldState) => {
-  const { creeps, buildings } = worldState;
+  const { creeps, buildings, isSpawnLocked } = worldState;
 
   if (!buildings || !Object.keys(buildings).length) {
     console.log('Builders have nothing to do.');
@@ -130,7 +130,9 @@ export const builderAction = (creep, worldState) => {
       creep.moveTo(spawn);
       break;
     case STATES.WITHDRAWING:
-      creep.withdraw(spawn, RESOURCE_ENERGY);
+      if (!isSpawnLocked) {
+        creep.withdraw(spawn, RESOURCE_ENERGY);
+      }
       break;
   }
 
