@@ -25,11 +25,16 @@ export const muleAction = (creep, worldState) => {
   let sourceId = creep.memory.sourceId;
 
   if (!sourceId) {
-    sourceId = findKey(sourceMining, src => !src.muleId && src.isWithMule);
+    sourceId = findKey(
+      sourceMining,
+      (src) => src.isWithMule && (!src.mule || !creeps[src.mule])
+    );
   }
 
   if (!sourceId) {
-    console.log(`Mule unable to work, there's not a sourceMining requesting a mule`);
+    console.log(
+      `Mule unable to work, there's not a sourceMining requesting a mule`
+    );
     return;
   }
 
