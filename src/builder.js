@@ -32,7 +32,7 @@ export const builderAction = (creep, worldState) => {
       return;
     }
     let config = buildings[buildingId];
-    if (!config.maxOccupation && !config.builders && config.isBusy == null) {
+    if (Object.keys(config).length === 0) {
       buildings[buildingId] = {
         isBusy: false,
         builders: [],
