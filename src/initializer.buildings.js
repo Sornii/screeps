@@ -30,7 +30,7 @@ export const initializeBuildings = curry((constructionSites, worldState) => {
       building.isBusy = building.builders >= building.maxOccupation;
 
       each(creepsByProfession[PROFESSIONS.BUILDER], (builder) => {
-        if (!building.builders.includes(builder)) {
+        if (!building.builders.includes(builder.name)) {
           builder.memory.buildingId = null;
           builder.memory.state = null;
         }
