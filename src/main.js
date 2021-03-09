@@ -24,8 +24,8 @@ export const loop = () => {
       'buildings',
     ]),
     (worldState) => {
-      const { room } = worldState;
-      const constructionSites = room.find(FIND_CONSTRUCTION_SITES);
+      const { mainRoom } = worldState;
+      const constructionSites = mainRoom.find(FIND_CONSTRUCTION_SITES);
       return initializeBuildings(constructionSites)(worldState);
     },
     population,
