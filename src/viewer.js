@@ -24,4 +24,6 @@ export const viewer = curry((worldState) => {
     });
     room.visual.poly(path);
   });
+
+  return worldState;
 });

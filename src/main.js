@@ -15,16 +15,24 @@ import { initializeSourceMining } from './initializer.sourceMining';
 const roomName = 'W8N26';
 const spawnName = 'Spawn1';
 
+const WORLD_STATE = {
+  POPULATION: 'professionPopulation',
+  SOURCE_MINING: 'sourceMining',
+  MULE_ORDERS: 'muleOrders',
+  ROADS: 'roads',
+  BUILDINGS: 'buildings',
+};
+
 // noinspection JSUnusedGlobalSymbols
 export const loop = () => {
   pipe(
     initializeDefaultCreepOrder,
     initializeState([
-      'professionPopulation',
-      'sourceMining',
-      'muleOrders',
-      'roads',
-      'buildings',
+      WORLD_STATE.POPULATION,
+      WORLD_STATE.SOURCE_MINING,
+      WORLD_STATE.MULE_ORDERS,
+      WORLD_STATE.ROADS,
+      WORLD_STATE.BUILDINGS,
     ]),
     initializeSourceMining,
     (worldState) => {
@@ -62,11 +70,11 @@ export const loop = () => {
     },
     viewer,
     writeMemory([
-      'professionPopulation',
-      'sourceMining',
-      'muleOrders',
-      'roads',
-      'buildings',
+      WORLD_STATE.POPULATION,
+      WORLD_STATE.SOURCE_MINING,
+      WORLD_STATE.MULE_ORDERS,
+      WORLD_STATE.ROADS,
+      WORLD_STATE.BUILDINGS,
     ])
   )({
     creeps: Game.creeps,
