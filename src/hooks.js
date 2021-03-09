@@ -24,7 +24,7 @@ export const hookWithdraw = curry((worldState) => {
 
     // Create our new function
     Creep.prototype.withdraw = function (...args) {
-      if (!worldState.isSpawnLocked) {
+      if (worldState.isSpawnLocked) {
         console.log(`Spawn is locked`);
         return;
       }
