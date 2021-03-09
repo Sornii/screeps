@@ -6,7 +6,7 @@ import { action } from './actions';
 import { viewer } from './viewer';
 import { hookWithdraw } from './hooks';
 
-const roomName = 'W44N3';
+const roomName = 'W8N26';
 const spawnName = 'Spawn1';
 
 const initializeBuildings = (constructionSites) => {
