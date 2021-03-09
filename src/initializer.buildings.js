@@ -27,7 +27,7 @@ export const initializeBuildings = curry((constructionSites, worldState) => {
         (builder) => !!creeps[builder]
       );
       building.builders = take(building.builders, building.maxOccupation);
-      building.isBusy = building.builders >= building.maxOccupation;
+      building.isBusy = building.builders.length >= building.maxOccupation;
 
       each(creepsByProfession[PROFESSIONS.BUILDER], (builder) => {
         if (
@@ -51,7 +51,7 @@ export const initializeBuildings = curry((constructionSites, worldState) => {
     );
     each(falseBuildings, (building) => {
       building.builders = without(building.builders, builder.name);
-      building.isBusy = building.builders >= building.maxOccupation;
+      building.isBusy = building.builders.length >= building.maxOccupation;
     });
   });
 
