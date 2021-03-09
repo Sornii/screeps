@@ -35,7 +35,7 @@ export const loop = () => {
     (worldState) => {
       const { creeps } = worldState;
       return reduce(
-        sortBy(creeps, 'creep.memory.sortOrder'),
+        sortBy(creeps, 'creep.memory.order'),
         (state, creep) => {
           if (creep.ticksToLive === 1) {
             return dies(creep, state);
