@@ -1,4 +1,14 @@
-import { without, take, curry, difference, each, map, filter } from 'lodash';
+import {
+  pick,
+  without,
+  take,
+  curry,
+  difference,
+  each,
+  map,
+  filter,
+} from 'lodash';
+
 import { PROFESSIONS } from './professions';
 
 export const initializeBuildings = curry((constructionSites, worldState) => {
@@ -55,5 +65,5 @@ export const initializeBuildings = curry((constructionSites, worldState) => {
     });
   });
 
-  return { ...worldState, buildings };
+  return { ...worldState, buildings: pick(buildings, ids) };
 });
