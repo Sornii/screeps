@@ -63,6 +63,10 @@ export const initializeBuildings = curry(
       });
     });
 
+    each(buildings, (building) => {
+      building.isBusy = building.builders.length >= building.maxOccupation;
+    });
+
     each(buildings, (building, buildingId) => {
       if (building.builders.length) {
         building.builders = filter(
