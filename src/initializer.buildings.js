@@ -26,10 +26,22 @@ export const initializeBuildings = curry(
     }
 
     const buildingsIds = Object.keys(buildings);
+    const controllerId = mainSpawn.room.controller.id;
+
+    if (!buildingsIds.includes(controllerId)) {
+      buildings[controllerId] = {
+        isBusy: false,
+        builders: [],
+        maxOccupation: 2,
+      };
+    }
 
     const ids = map(constructionSites, 'id');
 
-    const idsToRemove = difference(buildingsIds, ids);
+    const idsToRemove = without(
+      difference(buildingsIds, ids),
+      controllerId
+    );
 
     buildings = pick(buildings, ids);
 
