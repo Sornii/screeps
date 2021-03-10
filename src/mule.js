@@ -55,7 +55,7 @@ const sourceMule = (creep, sourceId, worldState) => {
 
   switch (creep.memory.state) {
     case STATES.WAITING_TRANSFER:
-      if (miner.store.getUsedCapacity() === 0) {
+      if (miner.store.getFreeCapacity() === 0) {
         if (creep.pos.isNearTo(spawn.pos)) {
           creep.memory.state = STATES.STORING;
         } else {
