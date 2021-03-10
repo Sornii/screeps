@@ -36,7 +36,7 @@ export const initializeBuildings = curry(
       };
     }
 
-    const ids = map(constructionSites, 'id');
+    const ids = [...map(constructionSites, 'id'), controllerId];
 
     const idsToRemove = without(
       difference(buildingsIds, ids),
