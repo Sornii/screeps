@@ -70,9 +70,19 @@ const sourceMule = (creep, sourceId, worldState) => {
       if (flag && !isAtFlag) {
         creep.memory.state = STATES.MOVING_TO_MINE;
       } else if (flag && isAtFlag) {
-        creep.memory.state = STATES.WAITING_TRANSFER;
+        // TODO: instantaneously going back to store is the best option?!
+        if (creep.pos.isNearTo(spawn.pos)) {
+          creep.memory.state = STATES.STORING;
+        } else {
+          creep.memory.state = STATES.MOVING_TO_STORE;
+        }
       } else if (creep.pos.isNearTo(miner.pos)) {
-        creep.memory.state = STATES.WAITING_TRANSFER;
+        // TODO: instantaneously going back to store is the best option?!
+        if (creep.pos.isNearTo(spawn.pos)) {
+          creep.memory.state = STATES.STORING;
+        } else {
+          creep.memory.state = STATES.MOVING_TO_STORE;
+        }
       } else {
         creep.memory.state = STATES.MOVING_TO_MINE;
       }
