@@ -21,6 +21,8 @@ export const initializeBuildings = curry((constructionSites, worldState) => {
   const buildingsIds = Object.keys(buildings);
 
   const ids = map(constructionSites, 'id');
+  buildings = pick(buildings, ids);
+
   const idsToInsert = difference(ids, buildingsIds);
   each(idsToInsert, (idToInsert) => {
     buildings[idToInsert] = {
@@ -65,5 +67,5 @@ export const initializeBuildings = curry((constructionSites, worldState) => {
     });
   });
 
-  return { ...worldState, buildings: pick(buildings, ids) };
+  return { ...worldState, buildings };
 });
