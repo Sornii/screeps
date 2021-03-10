@@ -33,7 +33,13 @@ const sourceMule = (creep, sourceId, worldState) => {
 
   if (!creep.memory.state) {
     if (creep.store.getFreeCapacity() > 0) {
-      if (creep.pos.isNearTo(miner.pos)) {
+      const flag = Game.flags[sourceId];
+      const isAtFlag = flag && creep.pos.isEqualTo(flag);
+      if (flag && !isAtFlag) {
+        creep.memory.state = STATES.MOVING_TO_MINE;
+      } else if (flag && isAtFlag) {
+        creep.memory.state = STATES.WAITING_TRANSFER;
+      } else if (creep.pos.isNearTo(miner.pos)) {
         creep.memory.state = STATES.WAITING_TRANSFER;
       } else {
         creep.memory.state = STATES.MOVING_TO_MINE;
@@ -59,10 +65,10 @@ const sourceMule = (creep, sourceId, worldState) => {
       break;
     case STATES.MOVING_TO_MINE:
       const flag = Game.flags[sourceId];
-      const isNearToFlag = flag && creep.pos.isNearTo(flag);
-      if (flag && !isNearToFlag) {
+      const isAtFlag = flag && creep.pos.isEqualTo(flag);
+      if (flag && !isAtFlag) {
         creep.memory.state = STATES.MOVING_TO_MINE;
-      } else if (flag && isNearToFlag) {
+      } else if (flag && isAtFlag) {
         creep.memory.state = STATES.WAITING_TRANSFER;
       } else if (creep.pos.isNearTo(miner.pos)) {
         creep.memory.state = STATES.WAITING_TRANSFER;
