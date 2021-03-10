@@ -10,58 +10,55 @@ import {
 } from 'lodash';
 
 import { PROFESSIONS } from './professions';
+import { building } from './typedefs';
 
 export const initializeBuildings = curry(
   /**
    * Initialize the buildings
-   * @param constructionSites
    * @param {WorldState} worldState
    * @returns {WorldState}
    */
-  (constructionSites, worldState) => {
-    let { creepsByProfession, creeps, buildings, mainSpawn } = worldState;
+  (worldState) => {
+    let {
+      creepsByProfession,
+      creeps,
+      buildings,
+      mainSpawn,
+      mainRoom,
+    } = worldState;
+
+    const constructionSites = mainRoom.find(FIND_CONSTRUCTION_SITES);
 
     if (!buildings) {
       buildings = {};
     }
 
     const buildingsIds = Object.keys(buildings);
-    const controllerId = mainSpawn.room.controller.id;
 
-    if (!buildingsIds.includes(controllerId)) {
-      buildings[controllerId] = {
-        isBusy: false,
-        builders: [],
-        maxOccupation: 2,
-      };
-    }
-
-    const ids = [...map(constructionSites, 'id'), controllerId];
-
-    const idsToRemove = without(
-      difference(buildingsIds, ids),
-      controllerId
-    );
-
-    buildings = pick(buildings, ids);
-
-    const idsToInsert = difference(ids, buildingsIds);
-    each(idsToInsert, (idToInsert) => {
-      buildings[idToInsert] = {
-        isBusy: false,
-        builders: [],
-        maxOccupation: 1,
-      };
-    });
-
-    each(idsToRemove, (idToRemove) => {
-      each(creepsByProfession[PROFESSIONS.BUILDER], (builder) => {
-        if (builder.memory.buildingId === idToRemove) {
-          builder.memory.buildingId = null;
-          builder.memory.state = null;
+    const buildingsToAddFromConstructionSites = constructionSites
+      .map((constructionSite) => {
+        if (!buildingsIds.includes(constructionSite.id)) {
+          return {
+            [constructionSite.id]: {
+              ...building,
+              structureType: constructionSite.structureType,
+            },
+          };
         }
-      });
-    });
+      })
+      .filter(Boolean);
+
+    const buildingToAddFromController = (() => {
+      const controllerId = mainSpawn.room.controller.id;
+      if (!buildingsIds.includes(controllerId)) {
+        return {
+          [controllerId]: {
+            ...building,
+            maxOccupation: 2,
+          },
+        };
+      }
+    })();
 
     each(buildings, (building) => {
       building.isBusy = building.builders.length >= building.maxOccupation;
@@ -102,6 +99,24 @@ export const initializeBuildings = curry(
       });
     });
 
-    return { ...worldState, buildings };
+    const newBuildings = [
+      ...buildings,
+      ...buildingsToAddFromConstructionSites,
+      buildingToAddFromController,
+    ].filter(Boolean);
+
+    each(idsToRemove, (idToRemove) => {
+      each(creepsByProfession[PROFESSIONS.BUILDER], (builder) => {
+        if (builder.memory.buildingId === idToRemove) {
+          builder.memory.buildingId = null;
+          builder.memory.state = null;
+        }
+      });
+    });
+
+    return {
+      ...worldState,
+      buildings: newBuildings,
+    };
   }
 );

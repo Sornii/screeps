@@ -28,6 +28,7 @@ export const minerAction = (creep, worldState) => {
       (src, key) => !src.isBusy && key !== 'undefined'
     );
     if (!sourceId) {
+      console.log('Miners have not found a source to work on');
       return worldState;
     }
     config = sourceMining[sourceId];

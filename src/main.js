@@ -37,11 +37,7 @@ export const loop = () => {
       WORLD_STATE.BUILDINGS,
     ]),
     initializeSourceMining,
-    (worldState) => {
-      const { mainRoom } = worldState;
-      const constructionSites = mainRoom.find(FIND_CONSTRUCTION_SITES);
-      return initializeBuildings(constructionSites)(worldState);
-    },
+    initializeBuildings,
     population,
     hookWithdraw,
     (worldState) => {

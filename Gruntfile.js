@@ -16,6 +16,7 @@ module.exports = function (grunt) {
             },
           ],
         ],
+        comments: false,
       },
       dist: {
         files: [
