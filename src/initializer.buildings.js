@@ -28,6 +28,8 @@ export const initializeBuildings = curry(
     const buildingsIds = Object.keys(buildings);
     const controllerId = mainSpawn.room.controller.id;
 
+    console.log(`branch does not exist`);
+
     if (!buildingsIds.includes(controllerId)) {
       buildings[controllerId] = {
         isBusy: false,
