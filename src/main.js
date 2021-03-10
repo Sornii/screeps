@@ -11,7 +11,7 @@ import { pipe } from './pipe';
 import { writeMemory } from './write';
 import { initializeDefaultCreepOrder } from './professions';
 import { initializeSourceMining } from './initializer.sourceMining';
-import { initializeByProfession } from "./initializer.byProfession";
+import { initializeByProfession } from './initializer.byProfession';
 
 const roomName = 'W8N26';
 const spawnName = 'Spawn1';

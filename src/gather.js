@@ -1,5 +1,3 @@
 const name = 'Gather';
 
-export const gather = (spawn) => {
-
-};
+export const gather = (spawn) => {};
