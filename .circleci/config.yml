@@ -24,6 +24,10 @@ jobs:
           command: yarn compile
           name: Compile files
       - run:
+          command: |
+            echo "export SCREEPS_BRANCH=$CIRCLE_BRANCH" >> $BASH_ENV
+          name: Setup branch
+      - run:
           command: yarn deploy
           name: Run deployment to screeps
 
