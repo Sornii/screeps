@@ -74,7 +74,10 @@ export const minerAction = (creep, worldState) => {
         if (creep.pos.isNearTo(spawn.pos)) {
           creep.memory.state = STATES.STORING;
         } else if (mule) {
-          if (creep.pos.isNearTo(mule)) {
+          const flag = Game.flags[sourceId];
+          if (flag && mule.pos.isEqualTo(flag)) {
+            creep.memory.state = STATES.TRANSFERRING;
+          } else if (!flag && creep.pos.isNearTo(mule)) {
             creep.memory.state = STATES.TRANSFERRING;
           } else {
             creep.memory.state = STATES.WAITING_MULE;
