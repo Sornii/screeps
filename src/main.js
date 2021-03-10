@@ -13,8 +13,6 @@ import { initializeDefaultCreepOrder } from './professions';
 import { initializeSourceMining } from './initializer.sourceMining';
 import { initializeByProfession } from './initializer.byProfession';
 
-import
-
 const roomName = 'W8N26';
 const spawnName = 'Spawn1';
 
