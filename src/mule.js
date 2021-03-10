@@ -1,5 +1,6 @@
 import { find, first, findKey, remove } from 'lodash';
 import { STATES as BUILDER_STATES } from './builder';
+import { STATES as MINER_STATES } from './miner';
 
 export const STATES = {
   MOVING_TO_MINE: 'movingToMine',
@@ -25,6 +26,7 @@ const sourceMule = (creep, sourceId, worldState) => {
   };
 
   const miner = creeps[first(config.miners)];
+  const miners = config.miners.map((miner) => creeps[miner]);
 
   if (!miner) {
     console.log(`There's not a miner in the source`);
@@ -55,7 +57,20 @@ const sourceMule = (creep, sourceId, worldState) => {
 
   switch (creep.memory.state) {
     case STATES.WAITING_TRANSFER:
-      if (miner.store.getFreeCapacity() === 0) {
+      // if (creep.store.getFreeCapacity() === 0) {
+      //   if (creep.pos.isNearTo(spawn.pos)) {
+      //     creep.memory.state = STATES.STORING;
+      //   } else {
+      //     creep.memory.state = STATES.MOVING_TO_STORE;
+      //   }
+      // }
+      if (
+        miners.map(
+          (miner) =>
+            miner.store.getUsedCapacity() === 0 &&
+            (miner.memory.state === MINER_STATES.TRANSFERRING)
+        )
+      ) {
         if (creep.pos.isNearTo(spawn.pos)) {
           creep.memory.state = STATES.STORING;
         } else {
