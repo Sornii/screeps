@@ -58,8 +58,14 @@ const sourceMule = (creep, sourceId, worldState) => {
       }
       break;
     case STATES.MOVING_TO_MINE:
-      if (creep.pos.isNearTo(miner.pos)) {
-        creep.memory.state = STATES.MINING;
+      const flag = Game.flags[sourceId];
+      const isNearToFlag = flag && creep.pos.isNearTo(flag);
+      if (flag && !isNearToFlag) {
+        creep.memory.state = STATES.MOVING_TO_MINE;
+      } else if (flag && isNearToFlag) {
+        creep.memory.state = STATES.WAITING_TRANSFER;
+      } else if (creep.pos.isNearTo(miner.pos)) {
+        creep.memory.state = STATES.WAITING_TRANSFER;
       } else {
         creep.memory.state = STATES.MOVING_TO_MINE;
       }
@@ -85,7 +91,12 @@ const sourceMule = (creep, sourceId, worldState) => {
   // State-action
   switch (creep.memory.state) {
     case STATES.MOVING_TO_MINE:
-      creep.moveTo(miner);
+      const flag = Game.flags[sourceId];
+      if (flag) {
+        creep.moveTo(flag);
+      } else {
+        creep.moveTo(miner);
+      }
       break;
     case STATES.MOVING_TO_STORE:
       creep.moveTo(spawn);
