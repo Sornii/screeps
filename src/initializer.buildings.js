@@ -21,6 +21,9 @@ export const initializeBuildings = curry((constructionSites, worldState) => {
   const buildingsIds = Object.keys(buildings);
 
   const ids = map(constructionSites, 'id');
+
+  const idsToRemove = difference(buildingsIds, ids);
+
   buildings = pick(buildings, ids);
 
   const idsToInsert = difference(ids, buildingsIds);
@@ -30,6 +33,15 @@ export const initializeBuildings = curry((constructionSites, worldState) => {
       builders: [],
       maxOccupation: 1,
     };
+  });
+
+  each(idsToRemove, (idToRemove) => {
+    each(creepsByProfession[PROFESSIONS.BUILDER], (builder) => {
+      if (builder.memory.buildingId === idToRemove) {
+        builder.memory.buildingId = null;
+        builder.memory.state = null;
+      }
+    });
   });
 
   each(buildings, (building, buildingId) => {
