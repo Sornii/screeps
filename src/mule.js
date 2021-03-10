@@ -57,25 +57,11 @@ const sourceMule = (creep, sourceId, worldState) => {
 
   switch (creep.memory.state) {
     case STATES.WAITING_TRANSFER:
-      // if (creep.store.getFreeCapacity() === 0) {
-      //   if (creep.pos.isNearTo(spawn.pos)) {
-      //     creep.memory.state = STATES.STORING;
-      //   } else {
-      //     creep.memory.state = STATES.MOVING_TO_STORE;
-      //   }
-      // }
-      if (
-        miners.map(
-          (miner) =>
-            miner.store.getUsedCapacity() === 0 &&
-            (miner.memory.state === MINER_STATES.TRANSFERRING)
-        )
-      ) {
-        if (creep.pos.isNearTo(spawn.pos)) {
-          creep.memory.state = STATES.STORING;
-        } else {
-          creep.memory.state = STATES.MOVING_TO_STORE;
-        }
+      // TODO: instantaneously going back to store is the best option?!
+      if (creep.pos.isNearTo(spawn.pos)) {
+        creep.memory.state = STATES.STORING;
+      } else {
+        creep.memory.state = STATES.MOVING_TO_STORE;
       }
       break;
     case STATES.MOVING_TO_MINE:
