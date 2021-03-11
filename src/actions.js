@@ -14,7 +14,7 @@ export const action = (creep, worldState) => {
     console.log(
       `Profession ${creep.memory.profession} not found for ${creep.name}`
     );
-    return;
+    return worldState;
   }
   return ACTIONS[creep.memory.profession](creep, worldState);
 };

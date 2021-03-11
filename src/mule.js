@@ -22,11 +22,19 @@ export const STATES = {
  * @return {WorldState}
  */
 const sourceMule = (creep, sourceId, worldState) => {
-  const { mainSpawn: spawn, creeps, sourceMining } = worldState;
+  const { mainSpawn: spawn, creeps, sourceMining, towers } = worldState;
 
   let config = sourceMining[sourceId];
 
+  const tower = towers[0];
+
   creep.memory.sourceId = sourceId;
+
+  let store = spawn;
+  if (!creep.memory.storeId) {
+    creep.memory.storeId = spawn.id;
+  }
+
   config = {
     ...config,
     mule: creep.name,
@@ -54,7 +62,7 @@ const sourceMule = (creep, sourceId, worldState) => {
         creep.memory.state = STATES.MOVING_TO_MINE;
       }
     } else {
-      if (creep.pos.isNearTo(spawn.pos)) {
+      if (creep.pos.isNearTo(store.pos)) {
         creep.memory.state = STATES.STORING;
       } else {
         creep.memory.state = STATES.MOVING_TO_STORE;
@@ -65,7 +73,7 @@ const sourceMule = (creep, sourceId, worldState) => {
   switch (creep.memory.state) {
     case STATES.WAITING_TRANSFER:
       // TODO: instantaneously going back to store is the best option?!
-      if (creep.pos.isNearTo(spawn.pos)) {
+      if (creep.pos.isNearTo(store.pos)) {
         creep.memory.state = STATES.STORING;
       } else {
         creep.memory.state = STATES.MOVING_TO_STORE;
@@ -78,14 +86,14 @@ const sourceMule = (creep, sourceId, worldState) => {
         creep.memory.state = STATES.MOVING_TO_MINE;
       } else if (flag && isAtFlag) {
         // TODO: instantaneously going back to store is the best option?!
-        if (creep.pos.isNearTo(spawn.pos)) {
+        if (creep.pos.isNearTo(store.pos)) {
           creep.memory.state = STATES.STORING;
         } else {
           creep.memory.state = STATES.MOVING_TO_STORE;
         }
       } else if (creep.pos.isNearTo(miner.pos)) {
         // TODO: instantaneously going back to store is the best option?!
-        if (creep.pos.isNearTo(spawn.pos)) {
+        if (creep.pos.isNearTo(store.pos)) {
           creep.memory.state = STATES.STORING;
         } else {
           creep.memory.state = STATES.MOVING_TO_STORE;
@@ -95,7 +103,7 @@ const sourceMule = (creep, sourceId, worldState) => {
       }
       break;
     case STATES.MOVING_TO_STORE:
-      if (creep.pos.isNearTo(spawn.pos)) {
+      if (creep.pos.isNearTo(store.pos)) {
         creep.memory.state = STATES.STORING;
       } else {
         creep.memory.state = STATES.MOVING_TO_STORE;
@@ -107,6 +115,19 @@ const sourceMule = (creep, sourceId, worldState) => {
           creep.memory.state = STATES.WAITING_TRANSFER;
         } else {
           creep.memory.state = STATES.MOVING_TO_MINE;
+        }
+      } else {
+        if (store.store.getFreeCapacity() === 0) {
+          if (store.id === spawn.id) {
+            store = tower;
+          } else {
+            store = spawn;
+          }
+          if (creep.pos.isNearTo(store.pos)) {
+            creep.memory.state = STATES.STORING;
+          } else {
+            creep.memory.state = STATES.MOVING_TO_STORE;
+          }
         }
       }
       break;
@@ -123,10 +144,10 @@ const sourceMule = (creep, sourceId, worldState) => {
       }
       break;
     case STATES.MOVING_TO_STORE:
-      creep.moveTo(spawn);
+      creep.moveTo(store);
       break;
     case STATES.STORING:
-      creep.transfer(spawn, RESOURCE_ENERGY);
+      creep.transfer(store, RESOURCE_ENERGY);
       break;
   }
 
@@ -236,18 +257,6 @@ export const muleAction = (creep, worldState) => {
       buildings,
       (bld) => bld.isWithMule && (!bld.mule || !creeps[bld.mule])
     );
-  }
-
-  if (!buildingId) {
-    if (creep.store.getUsedCapacity() === 0) {
-      if (creep.withdraw(mainSpawn, RESOURCE_ENERGY) < 0) {
-        creep.moveTo(mainSpawn);
-      }
-    } else {
-      if (creep.transfer(towers[0], RESOURCE_ENERGY) < 0) {
-        creep.moveTo(towers[0]);
-      }
-    }
   }
 
   if (sourceId) {
