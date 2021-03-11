@@ -11,8 +11,8 @@ export const initializePopulationPriority = curry(
     const { countByProfession, professionPopulation } = worldState;
 
     if (
-      !countByProfession[PROFESSIONS.MULE] &&
-      professionPopulation[PROFESSIONS.MULE] > 0
+      countByProfession[PROFESSIONS.MULE] <
+      professionPopulation[PROFESSIONS.MULE]
     ) {
       return {
         ...worldState,

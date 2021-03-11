@@ -19,6 +19,12 @@ export const STATES = {
   IDLING: 'idling',
 };
 
+/**
+ *
+ * @param {Creep} creep
+ * @param {WorldState} worldState
+ * @return {WorldState}
+ */
 export const builderAction = (creep, worldState) => {
   const { creeps, buildings, isSpawnLocked } = worldState;
 
@@ -27,6 +33,9 @@ export const builderAction = (creep, worldState) => {
     return worldState;
   }
 
+  /**
+   * @type Id<ConstructionSite>
+   */
   let buildingId = creep.memory.buildingId;
   let building = Game.getObjectById(buildingId);
   let config = buildings[buildingId];
@@ -41,6 +50,7 @@ export const builderAction = (creep, worldState) => {
     );
     if (!buildingId) {
       console.log('Builder have not found a building to work on');
+      creep.memory.state = STATES.IDLING;
       return worldState;
     }
     config = buildings[buildingId];
@@ -79,6 +89,23 @@ export const builderAction = (creep, worldState) => {
 
   // State-checker
   switch (creep.memory.state) {
+    case STATES.IDLING:
+      if (building.progressTotal - building.progress) {
+        if (creep.store.getUsedCapacity() === 0) {
+          if (creep.pos.isNearTo(spawn.pos)) {
+            creep.memory.state = STATES.WITHDRAWING;
+          } else {
+            creep.memory.state = STATES.MOVING_TO_STORE;
+          }
+        } else {
+          if (creep.pos.inRangeTo(building.pos, 3)) {
+            creep.memory.state = STATES.BUILDING;
+          } else {
+            creep.memory.state = STATES.MOVING_TO_BUILDING;
+          }
+        }
+      }
+      break;
     case STATES.BUILDING:
       if (creep.store.getUsedCapacity() === 0) {
         if (creep.pos.isNearTo(spawn.pos)) {

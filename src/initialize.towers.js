@@ -25,7 +25,8 @@ export const initializeTowers = curry(
 
     towers.forEach((tower) => {
       const structure = otherStructuresSortedByHits.find(
-        (structure) => structure.hits / structure.hitsMax < 0.5
+        (structure) =>
+          structure.hits < 50000 && structure.hits / structure.hitsMax < 0.5
       );
 
       if (tower.repair(structure) < 0) {
