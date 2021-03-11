@@ -29,8 +29,12 @@ export const initializeTowers = curry(
           structure.hits < 50000 && structure.hits / structure.hitsMax < 0.5
       );
 
+      if (!structure) {
+        return;
+      }
+
       if (tower.repair(structure) < 0) {
-        console.log(`Tower tried to repair ${structure.name} but no success.`);
+        console.log(`Tower tried to repair ${structure} but no success.`);
       }
     });
 
