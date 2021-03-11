@@ -9,7 +9,10 @@ export const initializeSourceMining = curry((worldState) => {
     sourceMining: mapValues(sourceMining, (config) => {
       return {
         ...config,
-        isBusy: config.isBusy != null ? config.isBusy : isBusy(config),
+        isBusy:
+          config.isBusy != null
+            ? config.isBusy
+            : isBusy(config, { attrs: ['miners'] }),
         isWithMule: config.isWithMule != null ? config.isWithMule : null,
         mule: creeps[config.mule] ? config.mule : null,
         miners: config.miners != null ? config.miners : [],
