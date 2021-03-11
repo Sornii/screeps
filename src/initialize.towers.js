@@ -24,15 +24,13 @@ export const initializeTowers = curry(
     const otherStructuresSortedByHits = sortBy(otherStructures, 'hits');
 
     towers.forEach((tower) => {
-      otherStructuresSortedByHits.forEach((structure) => {
-        if (structure.hits / structure.hitsMax < 0.5) {
-          if (tower.repair(structure) < 0) {
-            console.log(
-              `Tower tried to repair ${structure.name} but no success.`
-            );
-          }
-        }
-      });
+      const structure = otherStructuresSortedByHits.find(
+        (structure) => structure.hits / structure.hitsMax < 0.5
+      );
+
+      if (tower.repair(structure) < 0) {
+        console.log(`Tower tried to repair ${structure.name} but no success.`);
+      }
     });
 
     return {
