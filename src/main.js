@@ -83,7 +83,7 @@ export const loop = () => {
         worldState
       );
     },
-    viewer,
+    // viewer,
     writeMemory([
       WORLD_STATE.POPULATION,
       WORLD_STATE.SOURCE_MINING,
