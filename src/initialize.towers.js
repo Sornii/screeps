@@ -34,7 +34,7 @@ export const initializeTowers = curry(
       }
 
       if (tower.repair(structure) < 0) {
-        console.log(`Tower tried to repair ${structure} but no success.`);
+        console.log(`Tower tried to repair ${structure.id} but no success.`);
       }
     });
 
