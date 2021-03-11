@@ -119,7 +119,7 @@ const sourceMule = (creep, sourceId, worldState) => {
           creep.memory.state = STATES.MOVING_TO_MINE;
         }
       } else {
-        if (store.store.getFreeCapacity() === 0) {
+        if (store.store.getFreeCapacity(RESOURCE_ENERGY) === 0) {
           if (store.id === spawn.id) {
             store = tower;
           } else {
