@@ -15,7 +15,7 @@ export const STATES = {
 };
 
 const sourceMule = (creep, sourceId, worldState) => {
-  const { mainSpawn: spawn, creeps, sourceMining } = worldState;
+  const { mainSpawn: spawn, creeps, sourceMining, towers } = worldState;
 
   let config = sourceMining[sourceId];
 
@@ -186,8 +186,14 @@ const buildingMule = (creep, buildingId, worldState) => {
   return worldState;
 };
 
+/**
+ * Initialize the buildings
+ * @param {Creep} creep
+ * @param {WorldState} worldState
+ * @returns {WorldState}
+ */
 export const muleAction = (creep, worldState) => {
-  const { creeps, muleOrders, sourceMining, buildings } = worldState;
+  const { creeps, muleOrders, sourceMining, buildings, towers, mainSpawn } = worldState;
 
   // TODO: rethink
   if (!muleOrders) {
@@ -216,6 +222,18 @@ export const muleAction = (creep, worldState) => {
       buildings,
       (bld) => bld.isWithMule && (!bld.mule || !creeps[bld.mule])
     );
+  }
+
+  if (!buildingId) {
+    if (creep.store.getUsedCapacity() === 0) {
+      if (creep.withdraw(mainSpawn, RESOURCE_ENERGY) < 0) {
+        creep.moveTo(mainSpawn);
+      }
+    } else {
+      if (creep.transfer(towers[0], RESOURCE_ENERGY) < 0) {
+        creep.moveTo(towers[0]);
+      }
+    }
   }
 
   if (sourceId) {

@@ -12,6 +12,8 @@ import { writeMemory } from './write';
 import { initializeDefaultCreepOrder } from './professions';
 import { initializeSourceMining } from './initializer.sourceMining';
 import { initializeByProfession } from './initializer.byProfession';
+import { initializeStructures } from './initialize.structures';
+import { initializeTowers } from './initialize.towers';
 
 const roomName = 'W8N26';
 const spawnName = 'Spawn1';
@@ -27,6 +29,8 @@ const WORLD_STATE = {
 // noinspection JSUnusedGlobalSymbols
 export const loop = () => {
   pipe(
+    initializeStructures,
+    initializeTowers,
     initializeDefaultCreepOrder,
     initializeByProfession,
     initializeState([
