@@ -90,19 +90,17 @@ export const builderAction = (creep, worldState) => {
   // State-checker
   switch (creep.memory.state) {
     case STATES.IDLING:
-      if (building.progressTotal - building.progress) {
-        if (creep.store.getUsedCapacity() === 0) {
-          if (creep.pos.isNearTo(spawn.pos)) {
-            creep.memory.state = STATES.WITHDRAWING;
-          } else {
-            creep.memory.state = STATES.MOVING_TO_STORE;
-          }
+      if (creep.store.getUsedCapacity() === 0) {
+        if (creep.pos.isNearTo(spawn.pos)) {
+          creep.memory.state = STATES.WITHDRAWING;
         } else {
-          if (creep.pos.inRangeTo(building.pos, 3)) {
-            creep.memory.state = STATES.BUILDING;
-          } else {
-            creep.memory.state = STATES.MOVING_TO_BUILDING;
-          }
+          creep.memory.state = STATES.MOVING_TO_STORE;
+        }
+      } else {
+        if (creep.pos.inRangeTo(building.pos, 3)) {
+          creep.memory.state = STATES.BUILDING;
+        } else {
+          creep.memory.state = STATES.MOVING_TO_BUILDING;
         }
       }
       break;

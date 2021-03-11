@@ -11,6 +11,8 @@ import {
 
 import { PROFESSIONS } from './professions';
 
+import { STATES as BUILDER_STATES } from './builder';
+
 export const initializeBuildings = curry(
   /**
    * Initialize the buildings
@@ -38,10 +40,7 @@ export const initializeBuildings = curry(
 
     const ids = [...map(constructionSites, 'id'), controllerId];
 
-    const idsToRemove = without(
-      difference(buildingsIds, ids),
-      controllerId
-    );
+    const idsToRemove = without(difference(buildingsIds, ids), controllerId);
 
     buildings = pick(buildings, ids);
 
@@ -58,7 +57,7 @@ export const initializeBuildings = curry(
       each(creepsByProfession[PROFESSIONS.BUILDER], (builder) => {
         if (builder.memory.buildingId === idToRemove) {
           builder.memory.buildingId = null;
-          builder.memory.state = null;
+          builder.memory.state = BUILDER_STATES.IDLING;
         }
       });
     });
