@@ -1,29 +1,35 @@
 import { curry, each } from 'lodash';
 
-export const viewer = curry((worldState) => {
-  const { roads } = worldState;
+export const viewer = curry(
+  /**
+   * @param {WorldState} worldState
+   * @returns {WorldState}
+   */
+  (worldState) => {
+    const { roads } = worldState;
 
-  each(roads, (road) => {
-    const { roomId, fromX, fromY, toX, toY } = road;
-    const room = Game.rooms[roomId];
+    each(roads, (road) => {
+      const { roomId, fromX, fromY, toX, toY } = road;
+      const room = Game.rooms[roomId];
 
-    if (!room) {
-      console.log(
-        `Can't create visual for path. Room ${roomId} doesn't exist.`
-      );
-      return;
-    }
+      if (!room) {
+        console.log(
+          `Can't create visual for path. Room ${roomId} doesn't exist.`
+        );
+        return;
+      }
 
-    const from = room.getPositionAt(fromX, fromY);
-    const to = room.getPositionAt(toX, toY);
-    const path = room.findPath(from, to, {
-      ignoreCreeps: true,
-      ignoreRoads: true,
-      swampCost: 1,
-      plainCost: 1,
+      const from = room.getPositionAt(fromX, fromY);
+      const to = room.getPositionAt(toX, toY);
+      const path = room.findPath(from, to, {
+        ignoreCreeps: true,
+        ignoreRoads: true,
+        swampCost: 1,
+        plainCost: 1,
+      });
+      room.visual.poly(path);
     });
-    room.visual.poly(path);
-  });
 
-  return worldState;
-});
+    return worldState;
+  }
+);

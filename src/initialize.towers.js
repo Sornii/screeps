@@ -2,7 +2,6 @@ import { curry, sortBy } from 'lodash';
 
 export const initializeTowers = curry(
   /**
-   * Initialize the buildings
    * @param {WorldState} worldState
    * @returns {WorldState}
    */
