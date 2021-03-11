@@ -20,6 +20,10 @@ export const initializeTowers = curry(
       (structure) => structure.structureType !== STRUCTURE_TOWER
     );
 
+    otherStructures.sort((a, b) => {
+      return a.ticksToDecay - b.ticksToDecay;
+    });
+
     towers.forEach((tower) => {
       otherStructures.forEach((structure) => {
         if (structure.ticksToDecay < 500) {
