@@ -33,6 +33,8 @@ const sourceMule = (creep, sourceId, worldState) => {
   let store = spawn;
   if (!creep.memory.storeId) {
     creep.memory.storeId = spawn.id;
+  } else if (creep.memory.storeId !== spawn.id) {
+    store = tower;
   }
 
   config = {
@@ -123,6 +125,7 @@ const sourceMule = (creep, sourceId, worldState) => {
           } else {
             store = spawn;
           }
+          creep.memory.storeId = store.id;
           if (creep.pos.isNearTo(store.pos)) {
             creep.memory.state = STATES.STORING;
           } else {
