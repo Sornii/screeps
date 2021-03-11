@@ -83,6 +83,14 @@ export const createBuilder = (spawn) => {
   return [configuration, spawn.spawnCreep(...configuration)];
 };
 
+/**
+ * @typedef {'miner' | 'mule' | 'builder'} Profession
+ */
+
+/**
+ * @readonly
+ * @enum {Profession}
+ */
 export const PROFESSIONS = {
   MINER: 'miner',
   MULE: 'mule',

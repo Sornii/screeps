@@ -14,6 +14,8 @@ import { initializeSourceMining } from './initializer.sourceMining';
 import { initializeByProfession } from './initializer.byProfession';
 import { initializeStructures } from './initialize.structures';
 import { initializeTowers } from './initialize.towers';
+import { initializePopulationPriority } from './initialize.populationPriority';
+import { initializeCountByProfession } from './initialize.countByProfession';
 
 const roomName = 'W8N26';
 const spawnName = 'Spawn1';
@@ -33,6 +35,7 @@ export const loop = () => {
     initializeTowers,
     initializeDefaultCreepOrder,
     initializeByProfession,
+    initializeCountByProfession,
     initializeState([
       WORLD_STATE.POPULATION,
       WORLD_STATE.SOURCE_MINING,
@@ -46,6 +49,7 @@ export const loop = () => {
       const constructionSites = mainRoom.find(FIND_CONSTRUCTION_SITES);
       return initializeBuildings(constructionSites)(worldState);
     },
+    initializePopulationPriority,
     population,
     hookWithdraw,
     (worldState) => {

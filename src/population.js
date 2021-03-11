@@ -2,11 +2,7 @@ import { curry, countBy, each } from 'lodash';
 import { createCreep } from './professions';
 
 export const population = curry((worldState) => {
-  const { professionPopulation: config, creeps, mainSpawn: spawn } = worldState;
-
-  const countByProfession = countBy(creeps, 'memory.profession');
-
-  console.log(`Current population ${JSON.stringify(countByProfession)}`);
+  const { professionPopulation: config, creeps, mainSpawn: spawn, countByProfession } = worldState;
 
   let isSpawnLocked = false;
 
