@@ -1135,7 +1135,7 @@
     sockjs "^0.3.18"
     steam-webapi "^0.6.5"
 
-"@screeps/common@2.15.3":
+"@screeps/common@2.15.3", "@screeps/common@^2.15.3":
   version "2.15.3"
   resolved "https://registry.yarnpkg.com/@screeps/common/-/common-2.15.3.tgz#df5e8d8ef98f4acb0ab294e2089c7532baa99273"
   integrity sha512-VR/n3psm5GaWYpsmERvv2Q4cg9X2P0mnooPnc6nFg9bH0COA+AYMnpRPGA0ga9+j0mXAZu6w94zviZYz1CVG0g==
@@ -1144,7 +1144,7 @@
     lodash "^3.10.1"
     q "^1.4.1"
 
-"@screeps/driver@5.2.0":
+"@screeps/driver@5.2.0", "@screeps/driver@^5.2.0":
   version "5.2.0"
   resolved "https://registry.yarnpkg.com/@screeps/driver/-/driver-5.2.0.tgz#c2b45ae5aa06e14868b4ff8b657fc1c6e78c4962"
   integrity sha512-RNtIdvtwJHfqkSP07+cv5LQY2jtKoNoca/2rV7NsAN9MmnQutwlpYCKN7J8D02lUlgMiEps0MbVNNgOoj+B4FQ==
@@ -1158,7 +1158,7 @@
     webpack "^3.11.0"
     webpack-shell-plugin "^0.5.0"
 
-"@screeps/engine@4.2.12":
+"@screeps/engine@4.2.12", "@screeps/engine@^4.2.12":
   version "4.2.12"
   resolved "https://registry.yarnpkg.com/@screeps/engine/-/engine-4.2.12.tgz#487aa74f444be54e6e9d652eb27dcdfe678edf7d"
   integrity sha512-yJRBCLJoCeESKEV5KRl0JVLHB3gWzmJLF6nZeYieDjAd8yT24JR3j/jkDikr51scu0tbTyHC1JeXb3DtstepLA==
