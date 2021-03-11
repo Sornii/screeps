@@ -154,6 +154,11 @@ export const minerAction = (creep, worldState) => {
   };
 };
 
+/**
+ * @param {Creep} creep
+ * @param {WorldState} worldState
+ * @return {WorldState}
+ */
 export const minerDeath = (creep, worldState) => {
   const { sourceMining } = worldState;
 

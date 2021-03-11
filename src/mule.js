@@ -14,8 +14,15 @@ export const STATES = {
   IDLING: 'idling',
 };
 
+/**
+ *
+ * @param {Creep} creep
+ * @param {Id<Source>} sourceId
+ * @param {WorldState} worldState
+ * @return {WorldState}
+ */
 const sourceMule = (creep, sourceId, worldState) => {
-  const { mainSpawn: spawn, creeps, sourceMining, towers } = worldState;
+  const { mainSpawn: spawn, creeps, sourceMining } = worldState;
 
   let config = sourceMining[sourceId];
 
@@ -135,6 +142,13 @@ const sourceMule = (creep, sourceId, worldState) => {
   };
 };
 
+/**
+ *
+ * @param {Creep} creep
+ * @param {Id<ConstructionSite>} buildingId
+ * @param {WorldState} worldState
+ * @return {WorldState}
+ */
 const buildingMule = (creep, buildingId, worldState) => {
   const { mainSpawn: spawn, creeps, buildings } = worldState;
 

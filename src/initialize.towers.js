@@ -1,4 +1,4 @@
-import { curry } from 'lodash';
+import { curry, sortBy } from 'lodash';
 
 export const initializeTowers = curry(
   /**
@@ -20,13 +20,12 @@ export const initializeTowers = curry(
       (structure) => structure.structureType !== STRUCTURE_TOWER
     );
 
-    otherStructures.sort((a, b) => {
-      return a.hits - b.hits;
-    });
+    /** @type {AnyStructure[]} */
+    const otherStructuresSortedByHits = sortBy(otherStructures, 'hits');
 
     towers.forEach((tower) => {
-      otherStructures.forEach((structure) => {
-        if (structure.hits < 5_000) {
+      otherStructuresSortedByHits.forEach((structure) => {
+        if (structure.hits < 5000) {
           if (tower.repair(structure) < 0) {
             console.log(
               `Tower tried to repair ${structure.name} but no success.`

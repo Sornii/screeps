@@ -1,5 +1,14 @@
 import { without, findKey, remove } from 'lodash';
 
+/**
+ * @typedef {string} BuilderState
+ */
+
+/**
+ * Builder states
+ * @readonly
+ * @enum {BuilderState}
+ */
 export const STATES = {
   MOVING_TO_BUILDING: 'movingToBuilding',
   MOVING_TO_STORE: 'movingToStore',
