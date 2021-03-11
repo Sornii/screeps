@@ -25,7 +25,7 @@ export const initializeTowers = curry(
 
     towers.forEach((tower) => {
       otherStructuresSortedByHits.forEach((structure) => {
-        if (structure.hits < 5000) {
+        if (structure.hits < 5000 || structure.ticksToDecay < 100) {
           if (tower.repair(structure) < 0) {
             console.log(
               `Tower tried to repair ${structure.name} but no success.`
