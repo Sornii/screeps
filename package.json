@@ -23,9 +23,6 @@
   "devDependencies": {
     "@babel/core": "^7.13.8",
     "@babel/preset-env": "^7.13.9",
-    "@screeps/common": "^2.15.3",
-    "@screeps/driver": "^5.2.0",
-    "@screeps/engine": "^4.2.12",
     "@types/lodash": "^4.14.168",
     "@types/screeps": "^3.2.1",
     "babel-eslint": "^10.1.0",
@@ -40,8 +37,7 @@
     "jsdoc": "^3.6.6",
     "nodemon": "^2.0.7",
     "prettier": "^2.2.1",
-    "pretty-quick": "^3.1.0",
-    "screeps-server-mockup": "^1.5.1"
+    "pretty-quick": "^3.1.0"
   },
   "husky": {
     "hooks": {
