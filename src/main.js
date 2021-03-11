@@ -1,5 +1,5 @@
 import { sortBy, reduce } from 'lodash';
-import { Map } from 'immutable';
+// import { Map } from 'immutable';
 
 import { population } from './population';
 import { dies } from './dies';
@@ -30,8 +30,8 @@ const WORLD_STATE = {
 };
 
 // tests immutable
-const myMap = Map({ a: 1 });
-const myNewMap = myMap.set('b', 2);
+// const myMap = Map({ a: 1 });
+// const myNewMap = myMap.set('b', 2);
 
 // noinspection JSUnusedGlobalSymbols
 export const loop = () => {
