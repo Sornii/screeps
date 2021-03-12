@@ -23,6 +23,17 @@ export const initializeTowers = curry(
     const otherStructuresSortedByHits = sortBy(otherStructures, 'hits');
 
     towers.forEach((tower) => {
+      const hostileCreeps = tower.room.find(FIND_HOSTILE_CREEPS, {
+        filter: function(creep) {
+          return creep.getActiveBodyparts(ATTACK) > 0;
+        }
+      });
+
+      if (hostileCreeps?.length) {
+        tower.attack(hostileCreeps);
+        return;
+      }
+
       const structure = otherStructuresSortedByHits.find(
         (structure) =>
           structure.hits < 50000 && structure.hits / structure.hitsMax < 0.5
