@@ -23,14 +23,10 @@ export const initializeTowers = curry(
     const otherStructuresSortedByHits = sortBy(otherStructures, 'hits');
 
     towers.forEach((tower) => {
-      const hostileCreeps = tower.room.find(FIND_HOSTILE_CREEPS, {
-        filter: function(creep) {
-          return creep.getActiveBodyparts(ATTACK) > 0;
-        }
-      });
+      const hostileCreeps = tower.room.find(FIND_HOSTILE_CREEPS);
 
       if (hostileCreeps?.length) {
-        tower.attack(hostileCreeps);
+        tower.attack(hostileCreeps[0]);
         return;
       }
 
