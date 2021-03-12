@@ -36,6 +36,10 @@ const sourceMule = (creep, sourceId, worldState) => {
     store = tower;
   }
 
+  if (creep.memory.orders?.length == null) {
+    creep.memory.orders = [];
+  }
+
   let order = first(creep.memory.orders);
 
   if (energyOrders.length && !order) {
