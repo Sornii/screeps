@@ -24,4 +24,5 @@
  * @property {Object.<Profession, Array<Creep>>} creepsByProfession
  *   The alive creeps grouped by profession
  * @property buildings
+ * @property {Array<Creep>} creeps
  */

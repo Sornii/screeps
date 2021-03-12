@@ -4,7 +4,7 @@ import { sortBy, reduce } from 'lodash';
 import { population } from './population';
 import { dies } from './dies';
 import { action } from './actions';
-import { viewer } from './viewer';
+// import { viewer } from './viewer';
 import { hookWithdraw } from './hooks';
 import { initializeState } from './initializer.state';
 import { initializeBuildings } from './initializer.buildings';
@@ -18,6 +18,7 @@ import { initializeTowers } from './initialize.towers';
 import { initializePopulationPriority } from './initialize.populationPriority';
 import { initializeCountByProfession } from './initialize.countByProfession';
 import { WORLD_STATE_BUCKET } from './constants';
+import { energyOrders } from "./energyOrders";
 
 const roomName = 'W8N26';
 const spawnName = 'Spawn1';
@@ -30,6 +31,7 @@ const spawnName = 'Spawn1';
 export const loop = () => {
   pipe(
     initializeStructures,
+    energyOrders,
     initializeTowers,
     initializeDefaultCreepOrder,
     initializeByProfession,
@@ -51,6 +53,11 @@ export const loop = () => {
     initializePopulationPriority,
     population,
     hookWithdraw,
+    /**
+     * Creep death
+     * @param {WorldState} worldState
+     * @return WorldState
+     */
     (worldState) => {
       const { creeps } = worldState;
       return reduce(
@@ -64,6 +71,11 @@ export const loop = () => {
         worldState
       );
     },
+    /**
+     * Creep action
+     * @param {WorldState} worldState
+     * @return WorldState
+     */
     (worldState) => {
       const { creeps } = worldState;
       return reduce(

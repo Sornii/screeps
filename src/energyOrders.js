@@ -1,6 +1,6 @@
 import { curry, find } from 'lodash';
 
-export const store = curry(
+export const energyOrders = curry(
   /**
    * @param {WorldState} worldState
    * @returns {WorldState}
