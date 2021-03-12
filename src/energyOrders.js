@@ -8,7 +8,7 @@ export const energyOrders = curry(
   (worldState) => {
     let { stores, energyOrders } = worldState;
 
-    if (!energyOrders) {
+    if (!energyOrders || !Array.isArray(energyOrders)) {
       energyOrders = [];
     }
 
