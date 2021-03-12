@@ -25,7 +25,7 @@ export const energyOrders = curry(
             if (!store.energy) {
               return {
                 storeId: store.id,
-                amount: store.store.getFreeCapacity(),
+                amount: store.store.getFreeCapacity(RESOURCE_ENERGY),
               };
             }
           })
