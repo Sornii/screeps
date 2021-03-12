@@ -6,7 +6,11 @@ export const energyOrders = curry(
    * @returns {WorldState}
    */
   (worldState) => {
-    const { stores, energyOrders } = worldState;
+    let { stores, energyOrders } = worldState;
+
+    if (!energyOrders) {
+      energyOrders = [];
+    }
 
     const newOrders = stores
       ? stores
