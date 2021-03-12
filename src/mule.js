@@ -1,6 +1,5 @@
-import { find, first, findKey, remove } from 'lodash';
+import { find, first, findKey } from 'lodash';
 import { STATES as BUILDER_STATES } from './builder';
-import { STATES as MINER_STATES } from './miner';
 
 export const STATES = {
   MOVING_TO_MINE: 'movingToMine',
@@ -22,7 +21,7 @@ export const STATES = {
  * @return {WorldState}
  */
 const sourceMule = (creep, sourceId, worldState) => {
-  const { mainSpawn: spawn, creeps, sourceMining, towers } = worldState;
+  const { mainSpawn: spawn, creeps, sourceMining, towers, energyOrders, structures } = worldState;
 
   let config = sourceMining[sourceId];
 
@@ -35,6 +34,19 @@ const sourceMule = (creep, sourceId, worldState) => {
     creep.memory.storeId = spawn.id;
   } else if (creep.memory.storeId !== spawn.id) {
     store = tower;
+  }
+
+  let order = first(creep.memory.orders);
+
+  if (energyOrders.length && !order) {
+    order = energyOrders.pop();
+    if (order) {
+      creep.memory.orders = [...(creep.memory.orders || []), order];
+    }
+  }
+
+  if (order) {
+    store = structures.find(({ id }) => id === order.storeId);
   }
 
   config = {
@@ -150,6 +162,10 @@ const sourceMule = (creep, sourceId, worldState) => {
       creep.moveTo(store);
       break;
     case STATES.STORING:
+      const currentEnergyAmount = creep.store.energy;
+      if (currentEnergyAmount >= order.amount) {
+        creep.memory.orders.pop();
+      }
       creep.transfer(store, RESOURCE_ENERGY);
       break;
   }

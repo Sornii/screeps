@@ -17,17 +17,10 @@ import { initializeStructures } from './initialize.structures';
 import { initializeTowers } from './initialize.towers';
 import { initializePopulationPriority } from './initialize.populationPriority';
 import { initializeCountByProfession } from './initialize.countByProfession';
+import { WORLD_STATE_BUCKET } from './constants';
 
 const roomName = 'W8N26';
 const spawnName = 'Spawn1';
-
-const WORLD_STATE = {
-  POPULATION: 'professionPopulation',
-  SOURCE_MINING: 'sourceMining',
-  MULE_ORDERS: 'muleOrders',
-  ROADS: 'roads',
-  BUILDINGS: 'buildings',
-};
 
 // tests immutable
 // const myMap = Map({ a: 1 });
@@ -42,11 +35,12 @@ export const loop = () => {
     initializeByProfession,
     initializeCountByProfession,
     initializeState([
-      WORLD_STATE.POPULATION,
-      WORLD_STATE.SOURCE_MINING,
-      WORLD_STATE.MULE_ORDERS,
-      WORLD_STATE.ROADS,
-      WORLD_STATE.BUILDINGS,
+      WORLD_STATE_BUCKET.POPULATION,
+      WORLD_STATE_BUCKET.SOURCE_MINING,
+      WORLD_STATE_BUCKET.MULE_ORDERS,
+      WORLD_STATE_BUCKET.ROADS,
+      WORLD_STATE_BUCKET.BUILDINGS,
+      WORLD_STATE_BUCKET.ENERGY_ORDERS,
     ]),
     initializeSourceMining,
     (worldState) => {
@@ -85,16 +79,18 @@ export const loop = () => {
     },
     // viewer,
     writeMemory([
-      WORLD_STATE.POPULATION,
-      WORLD_STATE.SOURCE_MINING,
-      WORLD_STATE.MULE_ORDERS,
-      WORLD_STATE.ROADS,
-      WORLD_STATE.BUILDINGS,
+      WORLD_STATE_BUCKET.POPULATION,
+      WORLD_STATE_BUCKET.SOURCE_MINING,
+      WORLD_STATE_BUCKET.MULE_ORDERS,
+      WORLD_STATE_BUCKET.ROADS,
+      WORLD_STATE_BUCKET.BUILDINGS,
+      WORLD_STATE_BUCKET.ENERGY_ORDERS,
     ])
   )({
     creeps: Game.creeps,
     mainSpawn: Game.spawns[spawnName],
     mainRoom: Game.rooms[roomName],
+    energyOrders: [],
   });
 
   for (const i in Memory.creeps) {

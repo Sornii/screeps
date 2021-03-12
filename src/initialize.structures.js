@@ -11,9 +11,14 @@ export const initializeStructures = curry(
 
     const structures = mainRoom.find(FIND_STRUCTURES);
 
+    const stores = structures.filter(
+      (structure) => structure.store?.energy != null
+    );
+
     return {
       ...worldState,
       structures,
+      stores,
     };
   }
 );
