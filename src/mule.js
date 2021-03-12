@@ -162,9 +162,11 @@ const sourceMule = (creep, sourceId, worldState) => {
       creep.moveTo(store);
       break;
     case STATES.STORING:
-      const currentEnergyAmount = creep.store.energy;
-      if (currentEnergyAmount >= order.amount) {
-        creep.memory.orders.pop();
+      if (order) {
+        const currentEnergyAmount = creep.store.energy;
+        if (currentEnergyAmount >= order.amount) {
+          creep.memory.orders.pop();
+        }
       }
       creep.transfer(store, RESOURCE_ENERGY);
       break;
