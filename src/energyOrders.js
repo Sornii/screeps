@@ -14,6 +14,9 @@ export const energyOrders = curry(
 
     const newOrders = stores
       ? stores
+          .filter((store) => {
+            return store.structureType !== 'container';
+          })
           .map((store) => {
             if (energyOrders.find((order) => order.storeId === store.id)) {
               return;
