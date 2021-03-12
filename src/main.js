@@ -31,7 +31,6 @@ const spawnName = 'Spawn1';
 export const loop = () => {
   pipe(
     initializeStructures,
-    energyOrders,
     initializeTowers,
     initializeDefaultCreepOrder,
     initializeByProfession,
@@ -51,6 +50,7 @@ export const loop = () => {
       return initializeBuildings(constructionSites)(worldState);
     },
     initializePopulationPriority,
+    energyOrders,
     population,
     hookWithdraw,
     /**
