@@ -18,7 +18,7 @@ export const energyOrders = curry(
             return store.structureType !== 'container';
           })
           .map((store) => {
-            if (energyOrders.find((order) => order.storeId === store.id)) {
+            if (energyOrders.filter((order) => order.storeId === store.id).length) {
               return;
             }
 
