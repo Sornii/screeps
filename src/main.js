@@ -18,7 +18,7 @@ import { initializeTowers } from './initialize.towers';
 import { initializePopulationPriority } from './initialize.populationPriority';
 import { initializeCountByProfession } from './initialize.countByProfession';
 import { WORLD_STATE_BUCKET } from './constants';
-import { energyOrders } from "./energyOrders";
+import { energyOrders } from './energyOrders';
 
 const roomName = 'W8N26';
 const spawnName = 'Spawn1';
