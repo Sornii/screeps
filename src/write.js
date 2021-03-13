@@ -7,4 +7,4 @@ export const writeMemory = curry((props, worldState) => {
   });
 });
 
-writeMemory.name = 'writeMemory';
+writeMemory.timedName = 'writeMemory';

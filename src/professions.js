@@ -125,4 +125,4 @@ export const createCreep = (profession, ...args) => {
   return CREATORS[profession](...args);
 };
 
-initializeDefaultCreepOrder.name = 'initializeDefaultCreepOrder';
+initializeDefaultCreepOrder.timedName = 'initializeDefaultCreepOrder';

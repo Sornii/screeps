@@ -23,4 +23,4 @@ export const initializeStructures = curry(
   }
 );
 
-initializeStructures.name = 'initializeStructures';
+initializeStructures.timedName = 'initializeStructures';

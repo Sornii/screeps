@@ -26,4 +26,4 @@ export const initializePopulationPriority = curry(
   }
 );
 
-initializePopulationPriority.name = 'initializePopulationPriority';
+initializePopulationPriority.timedName = 'initializePopulationPriority';

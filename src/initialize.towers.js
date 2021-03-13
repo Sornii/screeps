@@ -52,4 +52,4 @@ export const initializeTowers = curry(
   }
 );
 
-initializeTowers.name = 'initializeTowers';
+initializeTowers.timedName = 'initializeTowers';

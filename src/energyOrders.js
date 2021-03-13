@@ -39,4 +39,4 @@ export const energyOrders = curry(
   }
 );
 
-energyOrders.name = 'energyOrders';
+energyOrders.timedName = 'energyOrders';

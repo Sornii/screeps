@@ -23,4 +23,4 @@ export const hookWithdraw = curry((worldState) => {
   return worldState;
 });
 
-hookWithdraw.name = 'hookWithdraw';
+hookWithdraw.timedName = 'hookWithdraw';

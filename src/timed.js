@@ -6,7 +6,7 @@ export const timed = (timer) => (...fns) =>
     const time = timer.calc(start, end);
     const formatted = timer.format(time);
 
-    console.log(`Spent ${formatted} on ${fn.name}`);
+    console.log(`Spent ${formatted} on ${fn.timedName}`);
 
     return result;
   });

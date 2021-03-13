@@ -18,4 +18,4 @@ export const initializeStructuresByType = curry(
   }
 );
 
-initializeStructuresByType.name = 'initializeStructuresByType';
+initializeStructuresByType.timedName = 'initializeStructuresByType';

@@ -28,4 +28,4 @@ export const population = curry((worldState) => {
   return { ...worldState, isSpawnLocked };
 });
 
-population.name = 'population';
+population.timedName = 'population';

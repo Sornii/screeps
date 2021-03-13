@@ -19,4 +19,4 @@ export const initializeCountByProfession = curry(
   }
 );
 
-initializeCountByProfession.name = 'initializeCountByProfession';
+initializeCountByProfession.timedName = 'initializeCountByProfession';

@@ -36,4 +36,4 @@ export const initializeSourceMining = curry((worldState) => {
   };
 });
 
-initializeSourceMining.name = 'initializeSourceMining';
+initializeSourceMining.timedName = 'initializeSourceMining';
