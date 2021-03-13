@@ -21,7 +21,6 @@ export const death = curry(
    * @return WorldState
    */
   (worldState) => {
-    this.timedName = 'creepDeath';
     const { creeps } = worldState;
     return reduce(
       sortBy(creeps, 'creep.memory.order'),

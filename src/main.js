@@ -8,7 +8,7 @@ import { actions } from './actions';
 import { hookWithdraw } from './hooks';
 import { initializeState } from './initializer.state';
 import { initializeBuildings } from './initializer.buildings';
-import { pipe, timedPipe } from './pipe';
+import { pipe } from './pipe';
 import { writeMemory } from './write';
 import { initializeDefaultCreepOrder } from './professions';
 import { initializeSourceMining } from './initializer.sourceMining';
