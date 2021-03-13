@@ -32,7 +32,12 @@ const spawnName = 'Spawn1';
 // noinspection JSUnusedGlobalSymbols
 export const loop = () => {
   pipe(
-    ...timed(
+    ...timed({
+      start: Game.cpu.getUsed,
+      end: Game.cpu.getUsed,
+      calc: (start, end) => end - start,
+      format: (time) => `${time} CPU time`,
+    })(
       initializeStructures,
       initializeStructuresByType,
       initializeTowers,
