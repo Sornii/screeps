@@ -17,7 +17,7 @@ import { initializeStructures } from './initialize.structures';
 import { initializeTowers } from './initialize.towers';
 import { initializePopulationPriority } from './initialize.populationPriority';
 import { initializeCountByProfession } from './initialize.countByProfession';
-import { WORLD_STATE_BUCKET } from './constants';
+import { ALL_STATES, WORLD_STATE_BUCKET } from "./constants";
 import { energyOrders } from './energyOrders';
 import { initializeStructuresByType } from './initialize.structures.byType';
 import { timed } from './timed';
@@ -44,14 +44,7 @@ export const loop = () => {
       initializeDefaultCreepOrder,
       initializeByProfession,
       initializeCountByProfession,
-      initializeState([
-        WORLD_STATE_BUCKET.POPULATION,
-        WORLD_STATE_BUCKET.SOURCE_MINING,
-        WORLD_STATE_BUCKET.MULE_ORDERS,
-        WORLD_STATE_BUCKET.ROADS,
-        WORLD_STATE_BUCKET.BUILDINGS,
-        WORLD_STATE_BUCKET.ENERGY_ORDERS,
-      ]),
+      initializeState(ALL_STATES),
       initializeSourceMining,
       initializeBuildings,
       initializePopulationPriority,
@@ -61,14 +54,7 @@ export const loop = () => {
       death,
       actions,
       // viewer,
-      writeMemory([
-        WORLD_STATE_BUCKET.POPULATION,
-        WORLD_STATE_BUCKET.SOURCE_MINING,
-        WORLD_STATE_BUCKET.MULE_ORDERS,
-        WORLD_STATE_BUCKET.ROADS,
-        WORLD_STATE_BUCKET.BUILDINGS,
-        WORLD_STATE_BUCKET.ENERGY_ORDERS,
-      ])
+      writeMemory(ALL_STATES)
     )
   )({
     creeps: Game.creeps,
