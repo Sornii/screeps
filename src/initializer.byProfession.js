@@ -11,4 +11,4 @@ export const initializeByProfession = curry((worldState) => {
   };
 });
 
-initializeByProfession.name='initializeByProfession';
+initializeByProfession.timedName = 'initializeByProfession';
