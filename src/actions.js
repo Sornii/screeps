@@ -2,7 +2,7 @@ import { PROFESSIONS } from './professions';
 import { minerAction } from './miner';
 import { muleAction } from './mule';
 import { builderAction } from './builder';
-import { reduce } from 'lodash';
+import { curry, reduce } from 'lodash';
 
 export const ACTIONS = {
   [PROFESSIONS.MINER]: minerAction,

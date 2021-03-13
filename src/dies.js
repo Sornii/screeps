@@ -2,7 +2,7 @@ import { PROFESSIONS } from './professions';
 import { minerDeath } from './miner';
 import { muleDeath } from './mule';
 import { builderDeath } from './builder';
-import { reduce, sortBy } from 'lodash';
+import { curry, reduce, sortBy } from 'lodash';
 
 export const DEATHS = {
   [PROFESSIONS.MINER]: minerDeath,
