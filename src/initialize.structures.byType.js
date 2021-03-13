@@ -1,4 +1,5 @@
 import { curry, groupBy } from 'lodash';
+import { initializeStructures } from "./initialize.structures";
 
 export const initializeStructuresByType = curry(
   /**
@@ -16,3 +17,5 @@ export const initializeStructuresByType = curry(
     };
   }
 );
+
+initializeStructuresByType.name = 'initializeStructuresByType';

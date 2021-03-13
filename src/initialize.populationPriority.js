@@ -25,3 +25,5 @@ export const initializePopulationPriority = curry(
     return worldState;
   }
 );
+
+initializePopulationPriority.name = 'initializePopulationPriority';

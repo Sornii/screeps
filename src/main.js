@@ -54,6 +54,7 @@ export const loop = () => {
       ]),
       initializeSourceMining,
       (worldState) => {
+        this.name = 'initializeBuildings';
         const { mainRoom } = worldState;
         const constructionSites = mainRoom.find(FIND_CONSTRUCTION_SITES);
         return initializeBuildings(constructionSites)(worldState);
@@ -68,6 +69,7 @@ export const loop = () => {
        * @return WorldState
        */
       (worldState) => {
+        this.name = 'creepDeath';
         const { creeps } = worldState;
         return reduce(
           sortBy(creeps, 'creep.memory.order'),
@@ -86,6 +88,7 @@ export const loop = () => {
        * @return WorldState
        */
       (worldState) => {
+        this.name = 'creepAction';
         const { creeps } = worldState;
         return reduce(
           creeps,

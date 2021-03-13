@@ -22,3 +22,5 @@ export const initializeStructures = curry(
     };
   }
 );
+
+initializeStructures.name = 'initializeStructures';

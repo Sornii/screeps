@@ -6,3 +6,5 @@ export const writeMemory = curry((props, worldState) => {
     Memory[key] = value;
   });
 });
+
+writeMemory.name = 'writeMemory';

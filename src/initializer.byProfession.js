@@ -10,3 +10,5 @@ export const initializeByProfession = curry((worldState) => {
     creepsByProfession,
   };
 });
+
+initializeByProfession.name='initializeByProfession';

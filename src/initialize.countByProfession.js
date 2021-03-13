@@ -18,3 +18,5 @@ export const initializeCountByProfession = curry(
     };
   }
 );
+
+initializeCountByProfession.name = 'initializeCountByProfession';

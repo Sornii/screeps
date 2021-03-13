@@ -12,3 +12,5 @@ export const initializeState = curry((props, worldState) => {
 
   return { ...worldState, ...state };
 });
+
+initializeState.name = 'initializeState';

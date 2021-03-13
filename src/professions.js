@@ -124,3 +124,5 @@ export const initializeDefaultCreepOrder = curry((worldState) => {
 export const createCreep = (profession, ...args) => {
   return CREATORS[profession](...args);
 };
+
+initializeDefaultCreepOrder.name = 'initializeDefaultCreepOrder';

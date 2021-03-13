@@ -1,4 +1,5 @@
 import { curry, sortBy } from 'lodash';
+import { initializeStructures } from "./initialize.structures";
 
 export const initializeTowers = curry(
   /**
@@ -50,3 +51,5 @@ export const initializeTowers = curry(
     };
   }
 );
+
+initializeTowers.name = 'initializeTowers';
