@@ -20,6 +20,7 @@ import { initializeCountByProfession } from './initialize.countByProfession';
 import { WORLD_STATE_BUCKET } from './constants';
 import { energyOrders } from './energyOrders';
 import { initializeStructuresByType } from './initialize.structures.byType';
+import { timed } from './timed';
 
 const roomName = 'W8N26';
 const spawnName = 'Spawn1';
@@ -30,81 +31,78 @@ const spawnName = 'Spawn1';
 
 // noinspection JSUnusedGlobalSymbols
 export const loop = () => {
-  timedPipe({
-    start: Game.cpu.getUsed,
-    end: Game.cpu.getUsed,
-    calc: (start, end) => end - start,
-    format: (time) => `${time} CPU time`,
-  })(
-    initializeStructures,
-    initializeStructuresByType,
-    initializeTowers,
-    initializeDefaultCreepOrder,
-    initializeByProfession,
-    initializeCountByProfession,
-    initializeState([
-      WORLD_STATE_BUCKET.POPULATION,
-      WORLD_STATE_BUCKET.SOURCE_MINING,
-      WORLD_STATE_BUCKET.MULE_ORDERS,
-      WORLD_STATE_BUCKET.ROADS,
-      WORLD_STATE_BUCKET.BUILDINGS,
-      WORLD_STATE_BUCKET.ENERGY_ORDERS,
-    ]),
-    initializeSourceMining,
-    (worldState) => {
-      const { mainRoom } = worldState;
-      const constructionSites = mainRoom.find(FIND_CONSTRUCTION_SITES);
-      return initializeBuildings(constructionSites)(worldState);
-    },
-    initializePopulationPriority,
-    energyOrders,
-    population,
-    hookWithdraw,
-    /**
-     * Creep death
-     * @param {WorldState} worldState
-     * @return WorldState
-     */
-    (worldState) => {
-      const { creeps } = worldState;
-      return reduce(
-        sortBy(creeps, 'creep.memory.order'),
-        (state, creep) => {
-          if (creep.ticksToLive === 1) {
-            return dies(creep, state);
-          }
-          return state;
-        },
-        worldState
-      );
-    },
-    /**
-     * Creep action
-     * @param {WorldState} worldState
-     * @return WorldState
-     */
-    (worldState) => {
-      const { creeps } = worldState;
-      return reduce(
-        creeps,
-        (state, creep) => {
-          if (creep.ticksToLive !== 1) {
-            return action(creep, state);
-          }
-          return state;
-        },
-        worldState
-      );
-    },
-    // viewer,
-    writeMemory([
-      WORLD_STATE_BUCKET.POPULATION,
-      WORLD_STATE_BUCKET.SOURCE_MINING,
-      WORLD_STATE_BUCKET.MULE_ORDERS,
-      WORLD_STATE_BUCKET.ROADS,
-      WORLD_STATE_BUCKET.BUILDINGS,
-      WORLD_STATE_BUCKET.ENERGY_ORDERS,
-    ])
+  pipe(
+    ...timed(
+      initializeStructures,
+      initializeStructuresByType,
+      initializeTowers,
+      initializeDefaultCreepOrder,
+      initializeByProfession,
+      initializeCountByProfession,
+      initializeState([
+        WORLD_STATE_BUCKET.POPULATION,
+        WORLD_STATE_BUCKET.SOURCE_MINING,
+        WORLD_STATE_BUCKET.MULE_ORDERS,
+        WORLD_STATE_BUCKET.ROADS,
+        WORLD_STATE_BUCKET.BUILDINGS,
+        WORLD_STATE_BUCKET.ENERGY_ORDERS,
+      ]),
+      initializeSourceMining,
+      (worldState) => {
+        const { mainRoom } = worldState;
+        const constructionSites = mainRoom.find(FIND_CONSTRUCTION_SITES);
+        return initializeBuildings(constructionSites)(worldState);
+      },
+      initializePopulationPriority,
+      energyOrders,
+      population,
+      hookWithdraw,
+      /**
+       * Creep death
+       * @param {WorldState} worldState
+       * @return WorldState
+       */
+      (worldState) => {
+        const { creeps } = worldState;
+        return reduce(
+          sortBy(creeps, 'creep.memory.order'),
+          (state, creep) => {
+            if (creep.ticksToLive === 1) {
+              return dies(creep, state);
+            }
+            return state;
+          },
+          worldState
+        );
+      },
+      /**
+       * Creep action
+       * @param {WorldState} worldState
+       * @return WorldState
+       */
+      (worldState) => {
+        const { creeps } = worldState;
+        return reduce(
+          creeps,
+          (state, creep) => {
+            if (creep.ticksToLive !== 1) {
+              return action(creep, state);
+            }
+            return state;
+          },
+          worldState
+        );
+      },
+      // viewer,
+      writeMemory([
+        WORLD_STATE_BUCKET.POPULATION,
+        WORLD_STATE_BUCKET.SOURCE_MINING,
+        WORLD_STATE_BUCKET.MULE_ORDERS,
+        WORLD_STATE_BUCKET.ROADS,
+        WORLD_STATE_BUCKET.BUILDINGS,
+        WORLD_STATE_BUCKET.ENERGY_ORDERS,
+      ])
+    )
   )({
     creeps: Game.creeps,
     mainSpawn: Game.spawns[spawnName],
