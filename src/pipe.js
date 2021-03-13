@@ -3,15 +3,18 @@ export const pipe = (...fns) => (...args) =>
 
 export const timedPipe = (timer) => (...fns) => (...args) =>
   pipe(
-    fns.map((fn) => (...args) => {
-      const start = timer.start();
-      const result = fn(...args);
-      const end = timer.end();
-      const time = timer.calc(start, end);
-      const formatted = timer.format(time);
+    fns.map(
+      (fn) => (...args) => {
+        const start = timer.start();
+        const result = fn(...args);
+        const end = timer.end();
+        const time = timer.calc(start, end);
+        const formatted = timer.format(time);
 
-      console.log(`Spent ${formatted} on ${fn.name}`);
+        console.log(`Spent ${formatted} on ${fn.name}`);
 
-      return result;
-    })
+        return result;
+      },
+      ...args
+    )
   );
