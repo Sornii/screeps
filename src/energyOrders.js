@@ -1,4 +1,4 @@
-import { curry, find } from 'lodash';
+import { curry } from 'lodash';
 
 export const energyOrders = curry(
   /**

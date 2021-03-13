@@ -15,13 +15,19 @@ import { STATES as BUILDER_STATES } from './builder';
 
 export const initializeBuildings = curry(
   /**
-   * Initialize the buildings
-   * @param constructionSites
    * @param {WorldState} worldState
    * @returns {WorldState}
    */
-  (constructionSites, worldState) => {
-    let { creepsByProfession, creeps, buildings, mainSpawn } = worldState;
+  (worldState) => {
+    let {
+      creepsByProfession,
+      creeps,
+      buildings,
+      mainRoom,
+      mainSpawn,
+    } = worldState;
+
+    const constructionSites = mainRoom.find(FIND_CONSTRUCTION_SITES);
 
     if (!buildings) {
       buildings = {};
@@ -104,3 +110,5 @@ export const initializeBuildings = curry(
     return { ...worldState, buildings };
   }
 );
+
+initializeBuildings.name = 'initializeBuildings';

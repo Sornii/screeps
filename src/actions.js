@@ -2,6 +2,7 @@ import { PROFESSIONS } from './professions';
 import { minerAction } from './miner';
 import { muleAction } from './mule';
 import { builderAction } from './builder';
+import { reduce } from 'lodash';
 
 export const ACTIONS = {
   [PROFESSIONS.MINER]: minerAction,
@@ -18,3 +19,26 @@ export const action = (creep, worldState) => {
   }
   return ACTIONS[creep.memory.profession](creep, worldState);
 };
+
+export const actions = curry(
+  /**
+   * Creep action
+   * @param {WorldState} worldState
+   * @return WorldState
+   */
+  (worldState) => {
+    const { creeps } = worldState;
+    return reduce(
+      creeps,
+      (state, creep) => {
+        if (creep.ticksToLive !== 1) {
+          return action(creep, state);
+        }
+        return state;
+      },
+      worldState
+    );
+  }
+);
+
+actions.name = 'actions';

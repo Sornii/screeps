@@ -2,8 +2,8 @@ import { sortBy, reduce } from 'lodash';
 // import { Map } from 'immutable';
 
 import { population } from './population';
-import { dies } from './dies';
-import { action } from './actions';
+import { death } from './dies';
+import { actions } from './actions';
 // import { viewer } from './viewer';
 import { hookWithdraw } from './hooks';
 import { initializeState } from './initializer.state';
@@ -53,54 +53,13 @@ export const loop = () => {
         WORLD_STATE_BUCKET.ENERGY_ORDERS,
       ]),
       initializeSourceMining,
-      (worldState) => {
-        this.timedName = 'initializeBuildings';
-        const { mainRoom } = worldState;
-        const constructionSites = mainRoom.find(FIND_CONSTRUCTION_SITES);
-        return initializeBuildings(constructionSites)(worldState);
-      },
+      initializeBuildings,
       initializePopulationPriority,
       energyOrders,
       population,
       hookWithdraw,
-      /**
-       * Creep death
-       * @param {WorldState} worldState
-       * @return WorldState
-       */
-      (worldState) => {
-        this.timedName = 'creepDeath';
-        const { creeps } = worldState;
-        return reduce(
-          sortBy(creeps, 'creep.memory.order'),
-          (state, creep) => {
-            if (creep.ticksToLive === 1) {
-              return dies(creep, state);
-            }
-            return state;
-          },
-          worldState
-        );
-      },
-      /**
-       * Creep action
-       * @param {WorldState} worldState
-       * @return WorldState
-       */
-      (worldState) => {
-        this.timedName = 'creepAction';
-        const { creeps } = worldState;
-        return reduce(
-          creeps,
-          (state, creep) => {
-            if (creep.ticksToLive !== 1) {
-              return action(creep, state);
-            }
-            return state;
-          },
-          worldState
-        );
-      },
+      death,
+      actions,
       // viewer,
       writeMemory([
         WORLD_STATE_BUCKET.POPULATION,
