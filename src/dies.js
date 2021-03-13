@@ -36,4 +36,4 @@ export const death = curry(
   }
 );
 
-death.name = 'death';
+death.timedName = 'death';

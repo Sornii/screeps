@@ -111,4 +111,4 @@ export const initializeBuildings = curry(
   }
 );
 
-initializeBuildings.name = 'initializeBuildings';
+initializeBuildings.timedName = 'initializeBuildings';

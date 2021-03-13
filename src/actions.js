@@ -41,4 +41,4 @@ export const actions = curry(
   }
 );
 
-actions.name = 'actions';
+actions.timedName = 'actions';
