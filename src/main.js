@@ -8,7 +8,7 @@ import { action } from './actions';
 import { hookWithdraw } from './hooks';
 import { initializeState } from './initializer.state';
 import { initializeBuildings } from './initializer.buildings';
-import { pipe } from './pipe';
+import { pipe, timedPipe } from './pipe';
 import { writeMemory } from './write';
 import { initializeDefaultCreepOrder } from './professions';
 import { initializeSourceMining } from './initializer.sourceMining';
@@ -19,6 +19,7 @@ import { initializePopulationPriority } from './initialize.populationPriority';
 import { initializeCountByProfession } from './initialize.countByProfession';
 import { WORLD_STATE_BUCKET } from './constants';
 import { energyOrders } from './energyOrders';
+import { initializeStructuresByType } from './initialize.structures.byType';
 
 const roomName = 'W8N26';
 const spawnName = 'Spawn1';
@@ -29,8 +30,14 @@ const spawnName = 'Spawn1';
 
 // noinspection JSUnusedGlobalSymbols
 export const loop = () => {
-  pipe(
+  timedPipe({
+    start: Game.cpu.getUsed,
+    end: Game.cpu.getUsed,
+    calc: (start, end) => end - start,
+    format: (time) => `${time} CPU time`,
+  })(
     initializeStructures,
+    initializeStructuresByType,
     initializeTowers,
     initializeDefaultCreepOrder,
     initializeByProfession,
